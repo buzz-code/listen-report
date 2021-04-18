@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import Table from '../../components/table/Table';
 import { STUDENTS } from '../../constants/entity';
@@ -15,8 +15,17 @@ const StudentsContainer = () => {
   const title = 'תלמידות';
   const entity = STUDENTS;
   const columns = useMemo(() => getColumns(), []);
+  const validateRow = useCallback((rowData) => {
+    if (!rowData.tz) {
+      return 'חובה להזין תעודת זהות';
+    }
+    if (!rowData.name) {
+      return 'חובה להזין שם';
+    }
+    return null;
+  }, []);
 
-  return <Table entity={entity} title={title} columns={columns} />;
+  return <Table entity={entity} title={title} columns={columns} validateRow={validateRow} />;
 };
 
 export default StudentsContainer;
