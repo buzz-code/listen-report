@@ -9,7 +9,7 @@ import { materialTableOptions, materialTableLocalizations } from '../../config/c
 const getActions = (tableRef) => [
   {
     icon: 'refresh',
-    tooltip: 'Refresh Data',
+    tooltip: 'רענון נתונים',
     isFreeAction: true,
     onClick: () => tableRef.current && tableRef.current.onQueryChange(),
   },
