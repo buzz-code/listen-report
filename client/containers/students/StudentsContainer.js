@@ -7,6 +7,8 @@ const getColumns = () => [
   { field: 'tz', title: 'תעודת זהות' },
   { field: 'name', title: 'שם' },
   { field: 'phone_number', title: 'מספר טלפון' },
+  { field: 'klass', title: 'כיתה' },
+  { field: 'group', title: 'התמחות' },
 ];
 
 const StudentsContainer = () => {
