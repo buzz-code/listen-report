@@ -25,6 +25,7 @@ const Table = ({
   disableAdd,
   disableUpdate,
   disableDelete,
+  disableFiltering,
 }) => {
   const dispatch = useDispatch();
   const { data, error } = useSelector((state) => state[entity]);
@@ -91,7 +92,11 @@ const Table = ({
           onRowUpdate: disableUpdate ? null : onRowUpdate,
           onRowDelete: disableDelete ? null : onRowDelete,
         }}
-        options={{ ...materialTableOptions, exportCsv: handleCsvExport }}
+        options={{
+          ...materialTableOptions,
+          filtering: !disableFiltering,
+          exportCsv: handleCsvExport,
+        }}
         localization={materialTableLocalizations}
       />
     </div>

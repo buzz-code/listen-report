@@ -24,6 +24,7 @@ const TeacherReportsContainer = () => {
       disableAdd={true}
       disableUpdate={true}
       disableDelete={true}
+      disableFiltering={true}
     />
   );
 };

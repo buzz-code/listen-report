@@ -23,6 +23,7 @@ const OrganizationReportsContainer = () => {
       disableAdd={true}
       disableUpdate={true}
       disableDelete={true}
+      disableFiltering={true}
     />
   );
 };

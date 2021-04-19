@@ -25,6 +25,7 @@ const StudentReportsContainer = () => {
       disableAdd={true}
       disableUpdate={true}
       disableDelete={true}
+      disableFiltering={true}
     />
   );
 };

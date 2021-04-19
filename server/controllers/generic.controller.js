@@ -1,7 +1,7 @@
 import HttpStatus from 'http-status-codes';
 import moment from 'moment';
 
-export const fetchPage = async (dbQuery, { page, pageSize, orderBy, orderDirection, filters }, res) => {
+export const fetchPage = async ({ dbQuery, countQuery }, { page, pageSize, orderBy, orderDirection, filters }, res) => {
     if (orderBy) {
         dbQuery = dbQuery.query('orderBy', orderBy, orderDirection);
     }
@@ -19,10 +19,13 @@ export const fetchPage = async (dbQuery, { page, pageSize, orderBy, orderDirecti
         }
     }
 
-    const countQuery = dbQuery.clone();
+    if (!countQuery) {
+        countQuery = dbQuery.clone().count();
+    }
+
     dbQuery.query(qb => qb.offset(pageSize * +page).limit(pageSize));
     try {
-        const [count, result] = await Promise.all([countQuery.count(), dbQuery.fetchAll()])
+        const [count, result] = await Promise.all([countQuery, dbQuery.fetchAll()])
         res.json({
             error: null,
             data: result,
@@ -47,7 +50,7 @@ export default (model) => ({
      */
     findAll: function (req, res) {
         const dbQuery = new model({ user_id: req.currentUser.id });
-        fetchPage(dbQuery, req.query, res);
+        fetchPage({dbQuery}, req.query, res);
     },
 
     /**
