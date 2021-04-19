@@ -30,6 +30,7 @@ const Table = ({
   const dispatch = useDispatch();
   const { data, error } = useSelector((state) => state[entity]);
   const [validationError, setValidationError] = useState(null);
+  const [currentPageSize, setCurrentPageSize] = useState(5);
   const tableRef = createRef();
   const tableTitle = useMemo(() => 'רשימת ' + title, [title]);
   const actions = useMemo(() => getActions(tableRef), [tableRef]);
@@ -87,6 +88,7 @@ const Table = ({
         actions={actions}
         data={getData}
         isLoading={!data}
+        onChangeRowsPerPage={setCurrentPageSize}
         editable={{
           onRowAdd: disableAdd ? null : onRowAdd,
           onRowUpdate: disableUpdate ? null : onRowUpdate,
@@ -96,6 +98,7 @@ const Table = ({
           ...materialTableOptions,
           filtering: !disableFiltering,
           exportCsv: handleCsvExport,
+          pageSize: currentPageSize,
         }}
         localization={materialTableLocalizations}
       />
