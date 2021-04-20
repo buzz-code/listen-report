@@ -19,6 +19,7 @@ import {
   List as ListIcon,
   Chat,
   Assignment,
+  FileCopy,
 } from '@material-ui/icons';
 import { NavLink, useLocation } from 'react-router-dom';
 
@@ -92,6 +93,10 @@ const MiniDrawer = ({ navDrawerOpen, handleToggleDrawer }) => {
           {getNavLinkItem('/report-types', ListIcon, 'סוגי צפיה')}
           {getNavLinkItem('/texts', Chat, 'הודעות')}
         </div>
+      </List>
+      <Divider />
+      <List>
+        <div>{getNavLinkItem('/excel-import', FileCopy, 'העלאת קבצים')}</div>
       </List>
       <Divider />
       <List>

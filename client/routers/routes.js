@@ -16,6 +16,7 @@ const AsyncReportTypes = loadable(() => import('../containers/reportTypes/Report
 const AsyncStudents = loadable(() => import('../containers/students/StudentsContainer'));
 const AsyncTeachers = loadable(() => import('../containers/teachers/TeachersContainer'));
 const AsyncTexts = loadable(() => import('../containers/texts/TextsContainer'));
+const AsyncExcelImport = loadable(() => import('../containers/excel-import/ExcelImportContainer'));
 const AsyncStudentReports = loadable(() =>
   import('../containers/studentReports/StudentReportsContainer')
 );
@@ -38,6 +39,8 @@ const Router = () => (
       <PrivateRoute exact path="/students" layout={MainLayout} component={AsyncStudents} />
       <PrivateRoute exact path="/teachers" layout={MainLayout} component={AsyncTeachers} />
       <PrivateRoute exact path="/texts" layout={MainLayout} component={AsyncTexts} />
+
+      <PrivateRoute exact path="/excel-import" layout={MainLayout} component={AsyncExcelImport} />
 
       <PrivateRoute
         exact
