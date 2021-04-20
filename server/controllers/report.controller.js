@@ -8,7 +8,7 @@ import Student from '../models/student.model';
 import Teacher from '../models/teacher.model';
 import genericController, { fetchPage } from './generic.controller';
 
-export const { findAll, findById, store, update, destroy } = genericController(Report);
+export const { findAll, findById, store, update, destroy, uploadMultiple } = genericController(Report);
 
 /**
  * Get edit data

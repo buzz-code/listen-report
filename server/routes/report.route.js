@@ -47,4 +47,9 @@ router.route('/:id')
         reportCtrl.destroy(req, res);
     });
 
+router.route('/upload-multiple')
+    .post((req, res) => {
+        reportCtrl.uploadMultiple(req, res);
+    });
+
 export default router;

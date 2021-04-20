@@ -27,4 +27,9 @@ router.route('/:id')
         teacherCtrl.destroy(req, res);
     });
 
+router.route('/upload-multiple')
+    .post((req, res) => {
+        teacherCtrl.uploadMultiple(req, res);
+    });
+
 export default router;
