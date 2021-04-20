@@ -1,0 +1,10 @@
+export const USERS = 'משתמשים';
+export const REPORTS = 'צפיות';
+export const REPORT_TYPES = 'סוגי צפיה';
+export const STUDENTS = 'תלמידות';
+export const TEACHERS = 'מורות';
+export const TEXTS = 'הודעות';
+export const STUDENT_REPORTS = 'דו"ח לתלמידה';
+export const TEACHER_REPORTS = 'דו"ח למורה';
+export const ORGANIATION_REPORTS = 'דו"ח לארגון צפיה';
+export const DASHBOARD = 'לוח בקרה';

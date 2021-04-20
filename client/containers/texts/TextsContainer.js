@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 
 import Table from '../../components/table/Table';
-import { TEXTS } from '../../constants/entity';
+import { TEXTS as entity } from '../../constants/entity';
+import { TEXTS as title } from '../../constants/entity-title';
 
 const getColumns = () => [
   { field: 'name', title: 'שם', editable: 'onAdd' },
@@ -10,8 +11,6 @@ const getColumns = () => [
 ];
 
 const TextsContainer = () => {
-  const title = 'הודעות';
-  const entity = TEXTS;
   const columns = useMemo(() => getColumns(), []);
   const validateRow = useCallback((rowData) => {
     if (!rowData.name) {
