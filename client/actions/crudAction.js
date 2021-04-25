@@ -23,7 +23,8 @@ export const fetchAll = (entity, query) => {
         return dispatch(commonAction.fetch(entity, response.data));
       })
       .catch((error) => {
-        return dispatch(commonAction.failure(entity, error.response.data));
+        dispatch(commonAction.failure(entity, error.response.data));
+        return Promise.Reject();
       });
   };
 };
@@ -36,7 +37,8 @@ export const fetchById = (entity, id) => {
         return dispatch(commonAction.selectItem(entity, response.data));
       })
       .catch((error) => {
-        return dispatch(commonAction.failure(entity, error.response.data));
+        dispatch(commonAction.failure(entity, error.response.data));
+        return Promise.Reject();
       });
   };
 };
@@ -49,7 +51,8 @@ export const storeItem = (entity, data) => {
         // return dispatch(fetchAll(entity, data));
       })
       .catch((error) => {
-        return dispatch(commonAction.failure(entity, error.response.data));
+        dispatch(commonAction.failure(entity, error.response.data));
+        return Promise.Reject();
       });
   };
 };
@@ -62,7 +65,8 @@ export const updateItem = (entity, data, id) => {
         // return dispatch(fetchAll(entity, data));
       })
       .catch((error) => {
-        return dispatch(commonAction.failure(entity, error.response.data));
+        dispatch(commonAction.failure(entity, error.response.data));
+        return Promise.Reject();
       });
   };
 };
@@ -75,7 +79,8 @@ export const destroyItem = (entity, id, data) => {
         // return dispatch(fetchAll(entity, data));
       })
       .catch((error) => {
-        return dispatch(commonAction.failure(entity, error.response.data));
+        dispatch(commonAction.failure(entity, error.response.data));
+        return Promise.Reject();
       });
   };
 };
@@ -90,12 +95,12 @@ export const submitForm = (entity, data, id) => {
   };
 };
 
-export const getEditData = (entity) => {
+export const customHttpRequest = (entity, method, url, data, id) => {
   return (dispatch) => {
     return httpService
-      .getEditData(entity)
+      .customHttpRequest(entity, method, url, data, id)
       .then((response) => {
-        return dispatch(commonAction.getEditData(entity, response.data));
+        return dispatch(commonAction.customHttpRequest(entity, method, url, response.data));
       })
       .catch((error) => {
         return dispatch(commonAction.failure(entity, error.response.data));

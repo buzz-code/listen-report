@@ -23,10 +23,12 @@ const getEditLookup = (data) =>
 
 const ReportsContainer = () => {
   const dispatch = useDispatch();
-  const { editData } = useSelector((state) => state[REPORTS]);
+  const {
+    GET: { 'get-edit-data': editData },
+  } = useSelector((state) => state[entity]);
 
   useEffect(() => {
-    dispatch(crudAction.getEditData(REPORTS));
+    dispatch(crudAction.customHttpRequest(entity, 'GET', 'get-edit-data'));
   }, []);
 
   const editDataLists = useMemo(

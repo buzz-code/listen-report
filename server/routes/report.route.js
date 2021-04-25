@@ -16,7 +16,7 @@ router.route('/')
         reportCtrl.findAll(req, res);
     });
 
-router.route('/getEditData')
+router.route('/get-edit-data')
     .get((req, res) => {
         reportCtrl.getEditData(req, res);
     });
