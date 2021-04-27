@@ -7,4 +7,6 @@ export const TEXTS = 'texts';
 export const STUDENT_REPORTS = 'reports/getStudentReport';
 export const TEACHER_REPORTS = 'reports/getTeacherReport';
 export const ORGANIATION_REPORTS = 'reports/getOrganizationReport';
+export const DAILY_REPORTS = 'reports/getDailyReport';
+export const MONTHLY_REPORTS = 'reports/getMonthlyReport';
 export const DASHBOARD = 'dashboard';

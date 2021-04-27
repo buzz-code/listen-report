@@ -26,6 +26,12 @@ const AsyncTeacherReports = loadable(() =>
 const AsyncOrganizationReports = loadable(() =>
   import('../containers/organizationReports/OrganizationReportsContainer')
 );
+const AsyncDailyReports = loadable(() =>
+  import('../containers/dailyReports/DailyReportsContainer')
+);
+const AsyncMonthlyReports = loadable(() =>
+  import('../containers/monthlyReports/MonthlyReportsContainer')
+);
 
 const Router = () => (
   <Fragment>
@@ -59,6 +65,13 @@ const Router = () => (
         path="/organization-reports"
         layout={MainLayout}
         component={AsyncOrganizationReports}
+      />
+      <PrivateRoute exact path="/daily-reports" layout={MainLayout} component={AsyncDailyReports} />
+      <PrivateRoute
+        exact
+        path="/monthly-reports"
+        layout={MainLayout}
+        component={AsyncMonthlyReports}
       />
 
       <Route component={NotFound} />

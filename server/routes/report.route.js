@@ -36,6 +36,16 @@ router.route('/getOrganizationReport')
         reportCtrl.getOrganizationReport(req, res);
     });
 
+router.route('/getDailyReport')
+    .get((req, res) => {
+        reportCtrl.getDailyReport(req, res);
+    });
+
+router.route('/getMonthlyReport')
+    .get((req, res) => {
+        reportCtrl.getMonthlyReport(req, res);
+    });
+
 router.route('/:id')
     .get((req, res) => {
         reportCtrl.findById(req, res);

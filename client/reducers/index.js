@@ -14,6 +14,8 @@ import {
   STUDENT_REPORTS,
   TEACHER_REPORTS,
   ORGANIATION_REPORTS,
+  DAILY_REPORTS,
+  MONTHLY_REPORTS,
   DASHBOARD,
 } from '../constants/entity';
 
@@ -30,6 +32,8 @@ const appReducer = (history) =>
     [STUDENT_REPORTS]: crudReducer(STUDENT_REPORTS),
     [TEACHER_REPORTS]: crudReducer(TEACHER_REPORTS),
     [ORGANIATION_REPORTS]: crudReducer(ORGANIATION_REPORTS),
+    [DAILY_REPORTS]: crudReducer(DAILY_REPORTS),
+    [MONTHLY_REPORTS]: crudReducer(MONTHLY_REPORTS),
     [DASHBOARD]: crudReducer(DASHBOARD),
   });
 

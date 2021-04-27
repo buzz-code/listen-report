@@ -106,3 +106,53 @@ export function getOrganizationReport(req, res) {
     });
     fetchPage({ dbQuery, countQuery }, req.query, res);
 }
+
+/**
+ * Get daily report
+ *
+ * @param {object} req
+ * @param {object} res
+ * @returns {*}
+ */
+export function getDailyReport(req, res) {
+    const dbQuery = new Report({ user_id: req.currentUser.id })
+        .query(qb => {
+            qb.leftJoin('teachers', 'teachers.full_phone', 'reports.teacher_full_phone')
+            qb.leftJoin('report_types', 'reports.report_type_id', 'report_types.id')
+        });
+    const countQuery = dbQuery.clone().query()
+        .countDistinct({ count: ['reports.teacher_full_phone', 'report_date', 'report_types.name'] })
+        .then(res => res[0].count);
+    dbQuery.query(qb => {
+        qb.groupBy('reports.teacher_full_phone', 'teacher_tz', 'teacher_name', 'report_date', 'report_type_name')
+        qb.select('teachers.tz as teacher_tz', 'teachers.name as teacher_name', 'report_date', 'report_types.name as report_type_name')
+        qb.count({ student_count: 'reports.id' })
+        qb.avg({ lesson_count: bookshelf.knex.raw("TIMESTAMPDIFF(MINUTE, STR_TO_DATE(enter_hour, '%H%i'), STR_TO_DATE(exit_hour, '%H%i')) / 45") })
+    });
+    fetchPage({ dbQuery, countQuery }, req.query, res);
+}
+
+/**
+ * Get monthly report
+ *
+ * @param {object} req
+ * @param {object} res
+ * @returns {*}
+ */
+export function getMonthlyReport(req, res) {
+    const dbQuery = new Report({ user_id: req.currentUser.id })
+        .query(qb => {
+            qb.leftJoin('teachers', 'teachers.full_phone', 'reports.teacher_full_phone')
+            qb.leftJoin('report_types', 'reports.report_type_id', 'report_types.id')
+        });
+    const countQuery = dbQuery.clone().query()
+        .countDistinct({ count: ['reports.teacher_full_phone', bookshelf.knex.raw("DATE_FORMAT(report_date, '%Y-%m')"), 'report_types.name'] })
+        .then(res => res[0].count);
+    dbQuery.query(qb => {
+        qb.groupBy('reports.teacher_full_phone', 'teacher_tz', 'teacher_name', 'report_month', 'report_type_name')
+        qb.select('teachers.tz as teacher_tz', 'teachers.name as teacher_name', { report_month: bookshelf.knex.raw("DATE_FORMAT(report_date, '%Y-%m')") }, 'report_types.name as report_type_name')
+        qb.count({ student_count: 'reports.id' })
+        qb.avg({ lesson_count: bookshelf.knex.raw("TIMESTAMPDIFF(MINUTE, STR_TO_DATE(enter_hour, '%H%i'), STR_TO_DATE(exit_hour, '%H%i')) / 45") })
+    });
+    fetchPage({ dbQuery, countQuery }, req.query, res);
+}

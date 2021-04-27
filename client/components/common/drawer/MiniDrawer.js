@@ -104,6 +104,8 @@ const MiniDrawer = ({ navDrawerOpen, handleToggleDrawer }) => {
           {getNavLinkItem('/student-reports', Assignment, 'דו"ח לתלמידה')}
           {getNavLinkItem('/teacher-reports', Assignment, 'דו"ח למורה')}
           {getNavLinkItem('/organization-reports', Assignment, 'דו"ח לארגון צפיה')}
+          {getNavLinkItem('/daily-reports', Assignment, 'דו"ח שכר יומי')}
+          {getNavLinkItem('/monthly-reports', Assignment, 'דו"ח שכר חודשי')}
         </div>
       </List>
     </Drawer>

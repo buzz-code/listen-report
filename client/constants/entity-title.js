@@ -7,4 +7,6 @@ export const TEXTS = 'הודעות';
 export const STUDENT_REPORTS = 'דו"ח לתלמידה';
 export const TEACHER_REPORTS = 'דו"ח למורה';
 export const ORGANIATION_REPORTS = 'דו"ח לארגון צפיה';
+export const DAILY_REPORTS = 'דו"ח שכר יומי';
+export const MONTHLY_REPORTS = 'דו"ח שכר חודשי';
 export const DASHBOARD = 'לוח בקרה';
