@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import loadable from '@loadable/component';
 
 // Import custom components
 import PrivateRoute from './PrivateRoute';
@@ -8,71 +7,46 @@ import RestrictRoute from './RestrictRoute';
 import MainLayout from '../components/common/layout/MainLayout';
 import NotFound from '../components/error/NotFound';
 
-const AsyncLoginForm = loadable(() => import('../containers/auth/LoginContainer'));
-const AsyncSignUpForm = loadable(() => import('../containers/auth/SignUpContainer'));
-const AsyncDashboard = loadable(() => import('../containers/dashboard/DashboardContainer'));
-const AsyncReports = loadable(() => import('../containers/reports/ReportsContainer'));
-const AsyncReportTypes = loadable(() => import('../containers/reportTypes/ReportTypesContainer'));
-const AsyncStudents = loadable(() => import('../containers/students/StudentsContainer'));
-const AsyncTeachers = loadable(() => import('../containers/teachers/TeachersContainer'));
-const AsyncTexts = loadable(() => import('../containers/texts/TextsContainer'));
-const AsyncExcelImport = loadable(() => import('../containers/excel-import/ExcelImportContainer'));
-const AsyncStudentReports = loadable(() =>
-  import('../containers/studentReports/StudentReportsContainer')
-);
-const AsyncTeacherReports = loadable(() =>
-  import('../containers/teacherReports/TeacherReportsContainer')
-);
-const AsyncOrganizationReports = loadable(() =>
-  import('../containers/organizationReports/OrganizationReportsContainer')
-);
-const AsyncDailyReports = loadable(() =>
-  import('../containers/dailyReports/DailyReportsContainer')
-);
-const AsyncMonthlyReports = loadable(() =>
-  import('../containers/monthlyReports/MonthlyReportsContainer')
-);
+import LoginForm from '../containers/auth/LoginContainer';
+import SignUpForm from '../containers/auth/SignUpContainer';
+import Dashboard from '../containers/dashboard/DashboardContainer';
+import Reports from '../containers/reports/ReportsContainer';
+import ReportTypes from '../containers/reportTypes/ReportTypesContainer';
+import Students from '../containers/students/StudentsContainer';
+import Teachers from '../containers/teachers/TeachersContainer';
+import Texts from '../containers/texts/TextsContainer';
+import ExcelImport from '../containers/excel-import/ExcelImportContainer';
+import StudentReports from '../containers/studentReports/StudentReportsContainer';
+import TeacherReports from '../containers/teacherReports/TeacherReportsContainer';
+import OrganizationReports from '../containers/organizationReports/OrganizationReportsContainer';
+import DailyReports from '../containers/dailyReports/DailyReportsContainer';
+import MonthlyReports from '../containers/monthlyReports/MonthlyReportsContainer';
 
 const Router = () => (
   <Fragment>
     <Switch>
-      <RestrictRoute exact path="/" component={AsyncLoginForm} />
-      <RestrictRoute exact path="/signup" component={AsyncSignUpForm} />
+      <RestrictRoute exact path="/" component={LoginForm} />
+      <RestrictRoute exact path="/signup" component={SignUpForm} />
 
-      <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
-      <PrivateRoute exact path="/reports" layout={MainLayout} component={AsyncReports} />
-      <PrivateRoute exact path="/report-types" layout={MainLayout} component={AsyncReportTypes} />
-      <PrivateRoute exact path="/students" layout={MainLayout} component={AsyncStudents} />
-      <PrivateRoute exact path="/teachers" layout={MainLayout} component={AsyncTeachers} />
-      <PrivateRoute exact path="/texts" layout={MainLayout} component={AsyncTexts} />
+      <PrivateRoute exact path="/dashboard" layout={MainLayout} component={Dashboard} />
+      <PrivateRoute exact path="/reports" layout={MainLayout} component={Reports} />
+      <PrivateRoute exact path="/report-types" layout={MainLayout} component={ReportTypes} />
+      <PrivateRoute exact path="/students" layout={MainLayout} component={Students} />
+      <PrivateRoute exact path="/teachers" layout={MainLayout} component={Teachers} />
+      <PrivateRoute exact path="/texts" layout={MainLayout} component={Texts} />
 
-      <PrivateRoute exact path="/excel-import" layout={MainLayout} component={AsyncExcelImport} />
+      <PrivateRoute exact path="/excel-import" layout={MainLayout} component={ExcelImport} />
 
-      <PrivateRoute
-        exact
-        path="/student-reports"
-        layout={MainLayout}
-        component={AsyncStudentReports}
-      />
-      <PrivateRoute
-        exact
-        path="/teacher-reports"
-        layout={MainLayout}
-        component={AsyncTeacherReports}
-      />
+      <PrivateRoute exact path="/student-reports" layout={MainLayout} component={StudentReports} />
+      <PrivateRoute exact path="/teacher-reports" layout={MainLayout} component={TeacherReports} />
       <PrivateRoute
         exact
         path="/organization-reports"
         layout={MainLayout}
-        component={AsyncOrganizationReports}
+        component={OrganizationReports}
       />
-      <PrivateRoute exact path="/daily-reports" layout={MainLayout} component={AsyncDailyReports} />
-      <PrivateRoute
-        exact
-        path="/monthly-reports"
-        layout={MainLayout}
-        component={AsyncMonthlyReports}
-      />
+      <PrivateRoute exact path="/daily-reports" layout={MainLayout} component={DailyReports} />
+      <PrivateRoute exact path="/monthly-reports" layout={MainLayout} component={MonthlyReports} />
 
       <Route component={NotFound} />
     </Switch>

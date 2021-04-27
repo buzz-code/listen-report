@@ -1,26 +1,22 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Drawer,
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from '@material-ui/core';
-import {
-  ChevronRight,
-  Dashboard,
-  ListAlt,
-  People,
-  SupervisedUserCircle,
-  List as ListIcon,
-  Chat,
-  Assignment,
-  FileCopy,
-} from '@material-ui/icons';
+import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import PeopleIcon from '@material-ui/icons/People';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import ListIcon from '@material-ui/icons/List';
+import ChatIcon from '@material-ui/icons/Chat';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -80,32 +76,32 @@ const MiniDrawer = ({ navDrawerOpen, handleToggleDrawer }) => {
     >
       <div className={classes.toolbarIcon}>
         <IconButton onClick={handleToggleDrawer}>
-          <ChevronRight />
+          <ChevronRightIcon />
         </IconButton>
       </div>
       <Divider />
       <List>
         <div>
-          {getNavLinkItem('/dashboard', Dashboard, 'לוח בקרה')}
-          {getNavLinkItem('/reports', ListAlt, 'צפיות')}
-          {getNavLinkItem('/students', People, 'תלמידות')}
-          {getNavLinkItem('/teachers', SupervisedUserCircle, 'מורות')}
+          {getNavLinkItem('/dashboard', DashboardIcon, 'לוח בקרה')}
+          {getNavLinkItem('/reports', ListAltIcon, 'צפיות')}
+          {getNavLinkItem('/students', PeopleIcon, 'תלמידות')}
+          {getNavLinkItem('/teachers', SupervisedUserCircleIcon, 'מורות')}
           {getNavLinkItem('/report-types', ListIcon, 'סוגי צפיה')}
-          {getNavLinkItem('/texts', Chat, 'הודעות')}
+          {getNavLinkItem('/texts', ChatIcon, 'הודעות')}
         </div>
       </List>
       <Divider />
       <List>
-        <div>{getNavLinkItem('/excel-import', FileCopy, 'העלאת קבצים')}</div>
+        <div>{getNavLinkItem('/excel-import', FileCopyIcon, 'העלאת קבצים')}</div>
       </List>
       <Divider />
       <List>
         <div>
-          {getNavLinkItem('/student-reports', Assignment, 'דו"ח לתלמידה')}
-          {getNavLinkItem('/teacher-reports', Assignment, 'דו"ח למורה')}
-          {getNavLinkItem('/organization-reports', Assignment, 'דו"ח לארגון צפיה')}
-          {getNavLinkItem('/daily-reports', Assignment, 'דו"ח שכר יומי')}
-          {getNavLinkItem('/monthly-reports', Assignment, 'דו"ח שכר חודשי')}
+          {getNavLinkItem('/student-reports', AssignmentIcon, 'דו"ח לתלמידה')}
+          {getNavLinkItem('/teacher-reports', AssignmentIcon, 'דו"ח למורה')}
+          {getNavLinkItem('/organization-reports', AssignmentIcon, 'דו"ח לארגון צפיה')}
+          {getNavLinkItem('/daily-reports', AssignmentIcon, 'דו"ח שכר יומי')}
+          {getNavLinkItem('/monthly-reports', AssignmentIcon, 'דו"ח שכר חודשי')}
         </div>
       </List>
     </Drawer>
