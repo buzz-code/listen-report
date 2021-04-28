@@ -7,9 +7,11 @@ const getColumns = () => [
   { field: 'description', title: 'תיאור', editable: 'onAdd' },
   { field: 'value', title: 'ערך' },
 ];
+const getFilters = () => [];
 
 const TextsContainer = ({ entity, title }) => {
   const columns = useMemo(() => getColumns(), []);
+  const filters = useMemo(() => getFilters(), []);
   const validateRow = useCallback((rowData) => {
     if (!rowData.name) {
       return 'חובה להזין שם';
@@ -28,6 +30,7 @@ const TextsContainer = ({ entity, title }) => {
       entity={entity}
       title={title}
       columns={columns}
+      filters={filters}
       disableAdd={true}
       disableDelete={true}
       validateRow={validateRow}

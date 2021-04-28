@@ -15,6 +15,7 @@ const getColumns = (lookups) => [
   { field: 'other_students', title: 'תלמידות נוספות' },
   { field: 'report_type_id', title: 'סוג דיווח', lookup: lookups.reportTypes },
 ];
+const getFilters = () => [];
 
 const getEditLookup = (data) =>
   data ? Object.fromEntries(data.map(({ id, name }) => [id, name])) : {};
@@ -38,6 +39,7 @@ const ReportsContainer = ({ entity, title }) => {
     [editData]
   );
   const columns = useMemo(() => getColumns(editDataLists), [editData]);
+  const filters = useMemo(() => getFilters(), []);
 
   const manipulateDataToSave = (dataToSave) => ({
     ...dataToSave,
@@ -53,6 +55,7 @@ const ReportsContainer = ({ entity, title }) => {
       entity={entity}
       title={title}
       columns={columns}
+      filters={filters}
       manipulateDataToSave={manipulateDataToSave}
     />
   );

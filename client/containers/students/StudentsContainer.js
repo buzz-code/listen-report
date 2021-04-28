@@ -9,9 +9,11 @@ const getColumns = () => [
   { field: 'klass', title: 'כיתה' },
   { field: 'group', title: 'התמחות' },
 ];
+const getFilters = () => [];
 
 const StudentsContainer = ({ entity, title }) => {
   const columns = useMemo(() => getColumns(), []);
+  const filters = useMemo(() => getFilters(), []);
   const validateRow = useCallback((rowData) => {
     if (!rowData.tz) {
       return 'חובה להזין תעודת זהות';
@@ -22,7 +24,15 @@ const StudentsContainer = ({ entity, title }) => {
     return null;
   }, []);
 
-  return <Table entity={entity} title={title} columns={columns} validateRow={validateRow} />;
+  return (
+    <Table
+      entity={entity}
+      title={title}
+      columns={columns}
+      filters={filters}
+      validateRow={validateRow}
+    />
+  );
 };
 
 export default StudentsContainer;
