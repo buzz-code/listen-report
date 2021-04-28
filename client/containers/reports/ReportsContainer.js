@@ -2,8 +2,6 @@ import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Table from '../../components/table/Table';
-import { REPORTS as entity } from '../../constants/entity';
-import { REPORTS as title } from '../../constants/entity-title';
 import * as crudAction from '../../actions/crudAction';
 
 const getColumns = (lookups) => [
@@ -21,7 +19,7 @@ const getColumns = (lookups) => [
 const getEditLookup = (data) =>
   data ? Object.fromEntries(data.map(({ id, name }) => [id, name])) : {};
 
-const ReportsContainer = () => {
+const ReportsContainer = ({ entity, title }) => {
   const dispatch = useDispatch();
   const {
     GET: { 'get-edit-data': editData },

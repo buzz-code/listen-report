@@ -7,6 +7,9 @@ import ChatIcon from '@material-ui/icons/Chat';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 
+import * as entities from './entity';
+import * as titles from './entity-title';
+
 import Dashboard from '../containers/dashboard/DashboardContainer';
 import Reports from '../containers/reports/ReportsContainer';
 import ReportTypes from '../containers/reportTypes/ReportTypesContainer';
@@ -22,12 +25,48 @@ import MonthlyReports from '../containers/monthlyReports/MonthlyReportsContainer
 
 export default [
   [
-    { path: '/dashboard', component: Dashboard, icon: DashboardIcon, title: 'לוח בקרה' },
-    { path: '/reports', component: Reports, icon: ListAltIcon, title: 'צפיות' },
-    { path: '/report-types', component: ReportTypes, icon: PeopleIcon, title: 'תלמידות' },
-    { path: '/students', component: Students, icon: SupervisedUserCircleIcon, title: 'מורות' },
-    { path: '/teachers', component: Teachers, icon: ListIcon, title: 'סוגי צפיה' },
-    { path: '/texts', component: Texts, icon: ChatIcon, title: 'הודעות' },
+    {
+      path: '/dashboard',
+      component: Dashboard,
+      icon: DashboardIcon,
+      title: titles.DASHBOARD,
+      props: { entity: entities.DASHBOARD, title: titles.DASHBOARD },
+    },
+    {
+      path: '/reports',
+      component: Reports,
+      icon: ListAltIcon,
+      title: titles.REPORTS,
+      props: { entity: entities.REPORTS, title: titles.REPORTS },
+    },
+    {
+      path: '/students',
+      component: Students,
+      icon: PeopleIcon,
+      title: titles.STUDENTS,
+      props: { entity: entities.STUDENTS, title: titles.STUDENTS },
+    },
+    {
+      path: '/teachers',
+      component: Teachers,
+      icon: SupervisedUserCircleIcon,
+      title: titles.TEACHERS,
+      props: { entity: entities.TEACHERS, title: titles.TEACHERS },
+    },
+    {
+      path: '/report-types',
+      component: ReportTypes,
+      icon: ListIcon,
+      title: titles.REPORT_TYPES,
+      props: { entity: entities.REPORT_TYPES, title: titles.REPORT_TYPES },
+    },
+    {
+      path: '/texts',
+      component: Texts,
+      icon: ChatIcon,
+      title: titles.TEXTS,
+      props: { entity: entities.TEXTS, title: titles.TEXTS },
+    },
   ],
   [{ path: '/excel-import', component: ExcelImport, icon: FileCopyIcon, title: 'העלאת קבצים' }],
   [
@@ -35,31 +74,36 @@ export default [
       path: '/student-reports',
       component: StudentReports,
       icon: AssignmentIcon,
-      title: 'דו"ח לתלמידה',
+      title: titles.STUDENT_REPORTS,
+      props: { entity: entities.STUDENT_REPORTS, title: titles.STUDENT_REPORTS },
     },
     {
       path: '/teacher-reports',
       component: TeacherReports,
       icon: AssignmentIcon,
-      title: 'דו"ח למורה',
+      title: titles.TEACHER_REPORTS,
+      props: { entity: entities.TEACHER_REPORTS, title: titles.TEACHER_REPORTS },
     },
     {
       path: '/organization-reports',
       component: OrganizationReports,
       icon: AssignmentIcon,
-      title: 'דו"ח לארגון צפיה',
+      title: titles.ORGANIATION_REPORTS,
+      props: { entity: entities.ORGANIATION_REPORTS, title: titles.ORGANIATION_REPORTS },
     },
     {
       path: '/daily-reports',
       component: DailyReports,
       icon: AssignmentIcon,
-      title: 'דו"ח שכר יומי',
+      title: titles.DAILY_REPORTS,
+      props: { entity: entities.DAILY_REPORTS, title: titles.DAILY_REPORTS },
     },
     {
       path: '/monthly-reports',
       component: MonthlyReports,
       icon: AssignmentIcon,
-      title: 'דו"ח שכר חודשי',
+      title: titles.MONTHLY_REPORTS,
+      props: { entity: entities.MONTHLY_REPORTS, title: titles.MONTHLY_REPORTS },
     },
   ],
 ];
