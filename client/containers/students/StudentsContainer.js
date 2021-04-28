@@ -9,7 +9,13 @@ const getColumns = () => [
   { field: 'klass', title: 'כיתה' },
   { field: 'group', title: 'התמחות' },
 ];
-const getFilters = () => [];
+const getFilters = () => [
+  { field: 'tz', label: 'תעודת זהות', type: 'text', operator: 'like' },
+  { field: 'name', label: 'שם', type: 'text', operator: 'like' },
+  { field: 'phone_number', label: 'מספר טלפון', type: 'text', operator: 'like' },
+  { field: 'klass', label: 'כיתה', type: 'text', operator: 'like' },
+  { field: 'group', label: 'התמחות', type: 'text', operator: 'like' },
+];
 
 const StudentsContainer = ({ entity, title }) => {
   const columns = useMemo(() => getColumns(), []);
