@@ -7,7 +7,11 @@ const getColumns = () => [
   { field: 'description', title: 'תיאור', editable: 'onAdd' },
   { field: 'value', title: 'ערך' },
 ];
-const getFilters = () => [];
+const getFilters = () => [
+  { field: 'name', label: 'שם', type: 'text', operator: 'like' },
+  { field: 'description', label: 'תיאור', type: 'text', operator: 'like' },
+  { field: 'value', label: 'ערך', type: 'text', operator: 'like' },
+];
 
 const TextsContainer = ({ entity, title }) => {
   const columns = useMemo(() => getColumns(), []);

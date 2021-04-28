@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -59,15 +59,18 @@ const FilterItem = ({ item, index, onChange, classes }) => {
     onChange(filter, index);
   };
 
-  return (
+  return item.type === 'text' || item.type === 'date' ? (
     <TextField
       className={classes.inputField}
-      type="text"
+      type={item.type}
       label={item.label}
       inputRef={inputRef}
       onChange={handleChange}
+      InputLabelProps={{
+        shrink: true,
+      }}
     />
-  );
+  ) : null;
 };
 
 export default TableFilter;

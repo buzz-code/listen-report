@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from 'react';
 import Table from '../../components/table/Table';
 
 const getColumns = () => [{ field: 'name', title: 'סוג צפיה' }];
-const getFilters = () => [];
+const getFilters = () => [{ field: 'name', label: 'סוג צפיה', type: 'text', operator: 'like' }];
 
 const ReportTypesContainer = ({ entity, title }) => {
   const columns = useMemo(() => getColumns(), []);

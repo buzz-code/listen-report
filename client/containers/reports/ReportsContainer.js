@@ -15,7 +15,17 @@ const getColumns = (lookups) => [
   { field: 'other_students', title: 'תלמידות נוספות' },
   { field: 'report_type_id', title: 'סוג דיווח', lookup: lookups.reportTypes },
 ];
-const getFilters = () => [];
+const getFilters = () => [
+  // { field: 'student_id', label: 'תלמידה', lookup: lookups.students , type: 'text', operator: 'like'},
+  { field: 'enter_hour', label: 'שעת כניסה', type: 'text', operator: 'like' },
+  { field: 'exit_hour', label: 'שעת יציאה', type: 'text', operator: 'like' },
+  { field: 'report_date', label: 'תאריך הדיווח', type: 'date', operator: 'date-eq' },
+  // { field: 'teacher_id', label: 'מורה', lookup: lookups.teachers , type: 'text', operator: 'like'},
+  { field: 'teacher_full_phone', label: 'טלפון מורה', type: 'text', operator: 'like' },
+  { field: 'lesson_number', label: 'מספר שיעור', type: 'text', operator: 'like' },
+  { field: 'other_students', label: 'תלמידות נוספות', type: 'text', operator: 'like' },
+  // { field: 'report_type_id', label: 'סוג דיווח', lookup: lookups.reportTypes , type: 'text', operator: 'like'},
+];
 
 const getEditLookup = (data) =>
   data ? Object.fromEntries(data.map(({ id, name }) => [id, name])) : {};
