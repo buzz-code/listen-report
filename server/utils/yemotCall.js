@@ -2,82 +2,25 @@ import { CallBase } from "./callBase";
 import format from 'string-format';
 import * as queryHelper from './queryHelper';
 import Report from "../models/report.model";
+import ReportTeacher from "../models/reportTeacher.model";
 
 export class YemotCall extends CallBase {
     constructor(params, callId, user) {
         super(params, callId, user);
     }
 
-    // texts = {
-    //     phoneIsNotRecognizedInTheSystem: 'מספר הטלפון אינו רשום במערכת',
-    //     welcomeAndTypeEnterHour: 'שלום {0} הגעת למוקד תיקוף נוכחות בצפיה, נא הקישי את שעת הכניסה שלך בארבע ספרות',
-    //     typeExitHour: 'נא הקישי את שעת היציאה שלך בארבע ספרות',
-    //     typeLastDigitsOfTeacher: 'נא הקישי ארבע ספרות אחרונות של מספר הטלפון של המורה המאמנת',
-    //     teacherLastDigitIsNotInTheSystem: 'מספר הטלפון לא קיים במערכת, הקישי את מספר הטלפון המלא',
-    //     askForNumberOfLessons: 'כמה שיעורים צפית אצל המורה {0}?',
-    //     lessonNumber: 'שיעור {0}:',
-    //     askForOtherStudentsNumber: 'כמה בנות צפו בשיעור חוץ ממך?',
-    //     chooseAttendanceTypeByLesson: 'בחרי את סוג הנוכחות, ',
-    //     forAttendanceTypeXPressY: 'ל{0} הקישי {1}, ',
-    //     askIfHasAnotherTeacher: 'האם צפית היום אצל מורה נוספת? אם כן הקישי 1, אם לא הקישי 2',
-    //     recordWasNotSaved: 'ארעה שגיאה, נסי שוב במועד מאוחר יותר',
-    //     recordWasSavedSuccessfully: 'תיקוף הנוכחות הסתיים בהצלחה',
-    // }
-
     async start() {
         await this.getTexts();
         try {
-            const student = await queryHelper.getStudentByUserIdAndPhone(this.user.id, this.params.ApiPhone);
-            if (!student) {
+            const [student, teacher] = await queryHelper.getStudentAndTeacherByUserIdAndPhone(this.user.id, this.params.ApiPhone);
+            if (student) {
+                this.handleStudentCall(student);
+            } else if (teacher) {
+                this.handleTeacherCall(teacher);
+            }
+            else {
                 await this.send(
                     this.id_list_message({ type: 'text', text: this.texts.phoneIsNotRecognizedInTheSystem }),
-                    this.hangup()
-                );
-            }
-            await this.send(
-                this.read({ type: 'text', text: format(this.texts.welcomeAndTypeEnterHour, student.name) },
-                    'enterHour', 'tap', { max: 4, min: 4, block_asterisk: true })
-            );
-            await this.send(
-                this.read({ type: 'text', text: this.texts.typeExitHour },
-                    'exitHour', 'tap', { max: 4, min: 4, block_asterisk: true })
-            );
-            await this.getTeacherDetails();
-            try {
-                const baseReport = {
-                    user_id: this.user.id,
-                    student_id: student.id,
-                    enter_hour: this.params.enterHour,
-                    exit_hour: this.params.exitHour,
-                    report_date: new Date().toISOString().substr(0, 10),
-                };
-                let lessonIndex = 1;
-                for (const teacherReport of this.params.teacherReport) {
-                    const baseTeacherReport = {
-                        ...baseReport,
-                        teacher_id: teacherReport.teacher?.id,
-                        teacher_full_phone: teacherReport.teacherFullPhone,
-                        teacher_last_digits: teacherReport.teacherLastDigits,
-                    };
-                    for (const lesson of teacherReport.lessons) {
-                        await new Report({
-                            ...baseTeacherReport,
-                            lesson_number: lessonIndex++,
-                            other_students: lesson.otherStudents,
-                            report_type_id: lesson.reportType.id,
-                        })
-                            .save();
-                    }
-                }
-                await this.send(
-                    this.id_list_message({ type: 'text', text: this.texts.recordWasSavedSuccessfully }),
-                    this.hangup()
-                );
-            }
-            catch (e) {
-                console.log('catch yemot exception', e);
-                await this.send(
-                    this.id_list_message({ type: 'text', text: this.texts.recordWasNotSaved }),
                     this.hangup()
                 );
             }
@@ -88,6 +31,56 @@ export class YemotCall extends CallBase {
             }
         } finally {
             this.end();
+        }
+    }
+
+    async handleStudentCall(student) {
+        await this.send(
+            this.read({ type: 'text', text: format(this.texts.welcomeAndTypeEnterHour, student.name) },
+                'enterHour', 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.typeExitHour },
+                'exitHour', 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
+        await this.getTeacherDetails();
+        try {
+            const baseReport = {
+                user_id: this.user.id,
+                student_id: student.id,
+                enter_hour: this.params.enterHour,
+                exit_hour: this.params.exitHour,
+                report_date: new Date().toISOString().substr(0, 10),
+            };
+            let lessonIndex = 1;
+            for (const teacherReport of this.params.teacherReport) {
+                const baseTeacherReport = {
+                    ...baseReport,
+                    teacher_id: teacherReport.teacher?.id,
+                    teacher_full_phone: teacherReport.teacherFullPhone,
+                    teacher_last_digits: teacherReport.teacherLastDigits,
+                };
+                for (const lesson of teacherReport.lessons) {
+                    await new Report({
+                        ...baseTeacherReport,
+                        lesson_number: lessonIndex++,
+                        other_students: lesson.otherStudents,
+                        report_type_id: lesson.reportType.id,
+                    })
+                        .save();
+                }
+            }
+            await this.send(
+                this.id_list_message({ type: 'text', text: this.texts.recordWasSavedSuccessfully }),
+                this.hangup()
+            );
+        }
+        catch (e) {
+            console.log('catch yemot exception', e);
+            await this.send(
+                this.id_list_message({ type: 'text', text: this.texts.recordWasNotSaved }),
+                this.hangup()
+            );
         }
     }
 
@@ -152,6 +145,47 @@ export class YemotCall extends CallBase {
         );
         if (this.params.anotherTeacher === '1') {
             await this.getTeacherDetails();
+        }
+    }
+
+    async handleTeacherCall(teacher) {
+        await this.send(
+            this.read({ type: 'text', text: format(this.texts.welcomeAndTypeEnterHour, teacher.name) },
+                'enterHour', 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.typeExitHour },
+                'exitHour', 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.typeWatchingStudents },
+                'watchingStudents', 'tap', { max: 2, min: 1, block_asterisk: true })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.typeTeachingStudents },
+                'teachingStudents', 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+        try {
+            await new ReportTeacher({
+                teacher_id: teacher.id,
+                enter_hour: this.params.enterHour,
+                exit_hour: this.params.exitHour,
+                report_date: new Date().toISOString().substr(0, 10),
+                watching_students: this.params.watchingStudents,
+                teaching_students: this.params.teachingStudents,
+            }).save();
+
+            await this.send(
+                this.id_list_message({ type: 'text', text: this.texts.recordWasSavedSuccessfully }),
+                this.hangup()
+            );
+        }
+        catch (e) {
+            console.log('catch yemot exception', e);
+            await this.send(
+                this.id_list_message({ type: 'text', text: this.texts.recordWasNotSaved }),
+                this.hangup()
+            );
         }
     }
 }

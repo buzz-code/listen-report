@@ -1,5 +1,5 @@
 import express from 'express';
-import * as reportTypeCtrl from '../controllers/reportType.controller';
+import * as reportTeacherCtrl from '../controllers/reportTeacher.controller';
 import isAuthenticated from '../middlewares/authenticate';
 import validate from '../config/joi.validate';
 import schema from '../utils/validator';
@@ -10,26 +10,31 @@ router.use(isAuthenticated);
 
 router.route('/')
     .post(validate(schema.storeReport), (req, res) => {
-        reportTypeCtrl.store(req, res);
+        reportTeacherCtrl.store(req, res);
     })
     .get((req, res) => {
-        reportTypeCtrl.findAll(req, res);
+        reportTeacherCtrl.findAll(req, res);
+    });
+
+router.route('/get-edit-data')
+    .get((req, res) => {
+        reportTeacherCtrl.getEditData(req, res);
     });
 
 router.route('/:id')
     .get((req, res) => {
-        reportTypeCtrl.findById(req, res);
+        reportTeacherCtrl.findById(req, res);
     })
     .put((req, res) => {
-        reportTypeCtrl.update(req, res);
+        reportTeacherCtrl.update(req, res);
     })
     .delete((req, res) => {
-        reportTypeCtrl.destroy(req, res);
+        reportTeacherCtrl.destroy(req, res);
     });
 
 router.route('/upload-multiple')
     .post((req, res) => {
-        reportTypeCtrl.uploadMultiple(req, res);
+        reportTeacherCtrl.uploadMultiple(req, res);
     });
 
 export default router;

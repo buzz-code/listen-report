@@ -6,6 +6,7 @@ import Report from '../models/report.model';
 import ReportType from '../models/reportType.model';
 import Student from '../models/student.model';
 import Teacher from '../models/teacher.model';
+import { getListFromTable } from '../utils/commonUtils';
 import genericController, { applyFilters, fetchPage } from './generic.controller';
 
 export const { findById, store, update, destroy, uploadMultiple } = genericController(Report);
@@ -47,13 +48,6 @@ export async function getEditData(req, res) {
         error: null,
         data: { reportTypes, students, teachers }
     });
-}
-
-function getListFromTable(table, user_id) {
-    return new table({ user_id })
-        .query({ select: ['id', 'name'] })
-        .fetchAll()
-        .then(result => result.toJSON());
 }
 
 /**

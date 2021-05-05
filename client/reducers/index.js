@@ -7,6 +7,7 @@ import authReducer from './authReducer';
 import crudReducer from './crudReducer';
 import {
   REPORTS,
+  REPORT_TEACHER,
   REPORT_TYPES,
   STUDENTS,
   TEACHERS,
@@ -25,6 +26,7 @@ const appReducer = (history) =>
     form: formReducer, // ← redux-form
     auth: authReducer,
     [REPORTS]: crudReducer(REPORTS),
+    [REPORT_TEACHER]: crudReducer(REPORT_TEACHER),
     [REPORT_TYPES]: crudReducer(REPORT_TYPES),
     [STUDENTS]: crudReducer(STUDENTS),
     [TEACHERS]: crudReducer(TEACHERS),

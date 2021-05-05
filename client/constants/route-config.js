@@ -1,5 +1,6 @@
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ListAltIcon from '@material-ui/icons/ListAlt';
+import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
 import PeopleIcon from '@material-ui/icons/People';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import ListIcon from '@material-ui/icons/List';
@@ -12,6 +13,7 @@ import * as titles from './entity-title';
 
 import Dashboard from '../containers/dashboard/DashboardContainer';
 import Reports from '../containers/reports/ReportsContainer';
+import ReportTeacher from '../containers/reportTeacher/ReportTeacherContainer';
 import ReportTypes from '../containers/reportTypes/ReportTypesContainer';
 import Students from '../containers/students/StudentsContainer';
 import Teachers from '../containers/teachers/TeachersContainer';
@@ -38,6 +40,13 @@ export default [
       icon: ListAltIcon,
       title: titles.REPORTS,
       props: { entity: entities.REPORTS, title: titles.REPORTS },
+    },
+    {
+      path: '/report-teacher',
+      component: ReportTeacher,
+      icon: ListAltOutlinedIcon,
+      title: titles.REPORT_TEACHER,
+      props: { entity: entities.REPORT_TEACHER, title: titles.REPORT_TEACHER },
     },
     {
       path: '/students',

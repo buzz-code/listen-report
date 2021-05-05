@@ -1,5 +1,6 @@
 export const USERS = 'משתמשים';
 export const REPORTS = 'צפיות';
+export const REPORT_TEACHER = 'צפיות- נתוני מורות';
 export const REPORT_TYPES = 'סוגי צפיה';
 export const STUDENTS = 'תלמידות';
 export const TEACHERS = 'מורות';

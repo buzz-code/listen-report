@@ -9,10 +9,14 @@ export function getUserByPhone(phone_number) {
         .then(res => res.toJSON());
 }
 
-export function getStudentByUserIdAndPhone(user_id, phone_number) {
-    return new Student({ user_id, phone_number })
+export function getStudentAndTeacherByUserIdAndPhone(user_id, phone_number) {
+    const student = new Student({ user_id, phone_number })
         .fetch({ require: false })
         .then(res => res ? res.toJSON() : null);
+    const teacher = new Teacher({ user_id, full_phone: phone_number })
+        .fetch({ require: false })
+        .then(res => res ? res.toJSON() : null);
+    return Promise.all([student, teacher]);
 }
 
 export function getTeacherByUserIdAndLastDigits(user_id, lastDigits) {
