@@ -6,6 +6,7 @@ import * as crudAction from '../../actions/crudAction';
 
 const getColumns = (lookups) => [
   { field: 'student_id', title: 'תלמידה', lookup: lookups.students },
+  { field: 'student_group', title: 'התמחות', editable: 'never' },
   { field: 'enter_hour', title: 'שעת כניסה' },
   { field: 'exit_hour', title: 'שעת יציאה' },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
@@ -16,15 +17,15 @@ const getColumns = (lookups) => [
   { field: 'report_type_id', title: 'סוג דיווח', lookup: lookups.reportTypes },
 ];
 const getFilters = () => [
-  // { field: 'student_id', label: 'תלמידה', lookup: lookups.students , type: 'text', operator: 'like'},
+  { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
+  { field: 'students.group', label: 'התמחות', type: 'text', operator: 'like' },
   { field: 'enter_hour', label: 'שעת כניסה', type: 'text', operator: 'like' },
   { field: 'exit_hour', label: 'שעת יציאה', type: 'text', operator: 'like' },
   { field: 'report_date', label: 'תאריך הדיווח', type: 'date', operator: 'date-eq' },
-  // { field: 'teacher_id', label: 'מורה', lookup: lookups.teachers , type: 'text', operator: 'like'},
+  { field: 'teachers.name', label: 'מורה', type: 'text', operator: 'like' },
   { field: 'teacher_full_phone', label: 'טלפון מורה', type: 'text', operator: 'like' },
   { field: 'lesson_number', label: 'מספר שיעור', type: 'text', operator: 'like' },
-  { field: 'other_students', label: 'תלמידות נוספות', type: 'text', operator: 'like' },
-  // { field: 'report_type_id', label: 'סוג דיווח', lookup: lookups.reportTypes , type: 'text', operator: 'like'},
+  { field: 'report_types.name', label: 'סוג דיווח', type: 'text', operator: 'like' },
 ];
 
 const getEditLookup = (data) =>

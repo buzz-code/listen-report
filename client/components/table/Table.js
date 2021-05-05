@@ -77,6 +77,10 @@ const Table = ({
   };
 
   useEffect(() => {
+    setConditions([]);
+  }, [entity]);
+
+  useEffect(() => {
     tableRef.current && tableRef.current.onQueryChange();
   }, [conditions]);
 

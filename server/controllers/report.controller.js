@@ -6,9 +6,29 @@ import Report from '../models/report.model';
 import ReportType from '../models/reportType.model';
 import Student from '../models/student.model';
 import Teacher from '../models/teacher.model';
-import genericController, { fetchPage } from './generic.controller';
+import genericController, { applyFilters, fetchPage } from './generic.controller';
 
-export const { findAll, findById, store, update, destroy, uploadMultiple } = genericController(Report);
+export const { findById, store, update, destroy, uploadMultiple } = genericController(Report);
+
+/**
+ * Find all the items
+ *
+ * @param {object} req
+ * @param {object} res
+ * @returns {*}
+ */
+export async function findAll(req, res) {
+    const dbQuery = new Report({ user_id: req.currentUser.id })
+        .query(qb => {
+            qb.innerJoin('students', 'students.id', 'reports.student_id')
+            qb.leftJoin('teachers', 'teachers.id', 'reports.teacher_id')
+            qb.leftJoin('report_types', 'report_types.id', 'reports.report_type_id')
+            qb.select('reports.*')
+            qb.select({ student_group: 'students.group' })
+        });
+    applyFilters(dbQuery, req.query.filters);
+    fetchPage({ dbQuery }, req.query, res);
+}
 
 /**
  * Get edit data
@@ -48,12 +68,13 @@ export function getStudentReport(req, res) {
         .query(qb => {
             qb.innerJoin('students', 'students.id', 'reports.student_id')
         })
+    applyFilters(dbQuery, req.query.filters);
     const countQuery = dbQuery.clone().query()
         .countDistinct({ count: ['student_id', 'report_date', 'enter_hour', 'exit_hour'] })
         .then(res => res[0].count);
     dbQuery.query(qb => {
         qb.groupBy('student_id', 'report_date', 'enter_hour', 'exit_hour')
-        qb.select('students.tz as student_tz', 'students.name as student_name', 'report_date', 'enter_hour', 'exit_hour')
+        qb.select('students.tz as student_tz', 'students.name as student_name', 'students.group as student_group', 'report_date', 'enter_hour', 'exit_hour')
         qb.count({ count: 'reports.id' })
     });
     fetchPage({ dbQuery, countQuery }, req.query, res);
@@ -71,6 +92,7 @@ export function getTeacherReport(req, res) {
         .query(qb => {
             qb.leftJoin('teachers', 'teachers.id', 'reports.teacher_id')
         });
+    applyFilters(dbQuery, req.query.filters);
     const countQuery = dbQuery.clone().query()
         .countDistinct({ count: ['reports.teacher_full_phone', bookshelf.knex.raw('ifnull(teachers.name, reports.teacher_full_phone)'), 'report_date', 'lesson_number'] })
         .then(res => res[0].count);
@@ -96,6 +118,7 @@ export function getOrganizationReport(req, res) {
             qb.leftJoin('teachers', 'teachers.id', 'reports.teacher_id')
             qb.leftJoin('students', 'students.id', 'reports.student_id')
         });
+    applyFilters(dbQuery, req.query.filters);
     const countQuery = dbQuery.clone().query()
         .countDistinct({ count: ['reports.teacher_full_phone', bookshelf.knex.raw('ifnull(teachers.name, reports.teacher_full_phone)'), 'report_date'] })
         .then(res => res[0].count);
@@ -120,6 +143,7 @@ export function getDailyReport(req, res) {
             qb.leftJoin('teachers', 'teachers.full_phone', 'reports.teacher_full_phone')
             qb.leftJoin('report_types', 'reports.report_type_id', 'report_types.id')
         });
+    applyFilters(dbQuery, req.query.filters);
     const countQuery = dbQuery.clone().query()
         .countDistinct({ count: ['reports.teacher_full_phone', 'report_date', 'report_types.name'] })
         .then(res => res[0].count);
@@ -145,6 +169,7 @@ export function getMonthlyReport(req, res) {
             qb.leftJoin('teachers', 'teachers.full_phone', 'reports.teacher_full_phone')
             qb.leftJoin('report_types', 'reports.report_type_id', 'report_types.id')
         });
+    applyFilters(dbQuery, req.query.filters);
     const countQuery = dbQuery.clone().query()
         .countDistinct({ count: ['reports.teacher_full_phone', bookshelf.knex.raw("DATE_FORMAT(report_date, '%Y-%m')"), 'report_types.name'] })
         .then(res => res[0].count);

@@ -8,15 +8,24 @@ const getColumns = () => [
   { field: 'report_date', title: 'תאריך' },
   { field: 'students', title: 'תלמידות' },
 ];
+const getFilters = () => [
+  { field: 'teachers.full_phone', label: 'טלפון מורה', type: 'text', operator: 'like' },
+  { field: 'teachers.name', label: 'שם', type: 'text', operator: 'like' },
+  { field: 'report_date', label: 'תאריך', type: 'date', operator: 'date-eq' },
+  { field: 'students.name', label: 'תלמידות', type: 'text', operator: 'like' },
+  { field: 'students.group', label: 'התמחות', type: 'text', operator: 'like' },
+];
 
 const OrganizationReportsContainer = ({ entity, title }) => {
   const columns = useMemo(() => getColumns(), []);
+  const filters = useMemo(() => getFilters(), []);
 
   return (
     <Table
       entity={entity}
       title={title}
       columns={columns}
+      filters={filters}
       disableAdd={true}
       disableUpdate={true}
       disableDelete={true}
