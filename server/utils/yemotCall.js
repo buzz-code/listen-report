@@ -14,9 +14,9 @@ export class YemotCall extends CallBase {
         try {
             const [student, teacher] = await queryHelper.getStudentAndTeacherByUserIdAndPhone(this.user.id, this.params.ApiPhone);
             if (student) {
-                this.handleStudentCall(student);
+                await this.handleStudentCall(student);
             } else if (teacher) {
-                this.handleTeacherCall(teacher);
+                await this.handleTeacherCall(teacher);
             }
             else {
                 await this.send(
