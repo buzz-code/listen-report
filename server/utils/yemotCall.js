@@ -167,6 +167,7 @@ export class YemotCall extends CallBase {
         );
         try {
             await new ReportTeacher({
+                user_id: this.user.id,
                 teacher_id: teacher.id,
                 enter_hour: this.params.enterHour,
                 exit_hour: this.params.exitHour,
