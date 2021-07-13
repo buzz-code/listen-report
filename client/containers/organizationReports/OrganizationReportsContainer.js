@@ -11,7 +11,8 @@ const getColumns = () => [
 const getFilters = () => [
   { field: 'teachers.full_phone', label: 'טלפון מורה', type: 'text', operator: 'like' },
   { field: 'teachers.name', label: 'שם', type: 'text', operator: 'like' },
-  { field: 'report_date', label: 'תאריך', type: 'date', operator: 'date-eq' },
+  { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
+  { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
   { field: 'students.name', label: 'תלמידות', type: 'text', operator: 'like' },
   { field: 'students.group', label: 'התמחות', type: 'text', operator: 'like' },
 ];

@@ -16,7 +16,8 @@ const getFilters = () => [
   { field: 'teachers.name', label: 'מורה', type: 'text', operator: 'like' },
   { field: 'enter_hour', label: 'שעת כניסה', type: 'text', operator: 'like' },
   { field: 'exit_hour', label: 'שעת יציאה', type: 'text', operator: 'like' },
-  { field: 'report_date', label: 'תאריך הדיווח', type: 'date', operator: 'date-eq' },
+  { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
+  { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
   { field: 'watching_students', label: 'תלמידות צופות', type: 'text', operator: 'like' },
   { field: 'teaching_students', label: 'תלמידות מוסרות', type: 'text', operator: 'like' },
 ];

@@ -17,7 +17,8 @@ const getFilters = () => [
   { field: 'students.group', label: 'התמחות', type: 'text', operator: 'like' },
   { field: 'enter_hour', label: 'שעת כניסה', type: 'text', operator: 'like' },
   { field: 'exit_hour', label: 'שעת יציאה', type: 'text', operator: 'like' },
-  { field: 'report_date', label: 'תאריך', type: 'date', operator: 'date-eq' },
+  { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
+  { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
 ];
 
 const StudentReportsContainer = ({ entity, title }) => {
