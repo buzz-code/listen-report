@@ -1,13 +1,13 @@
 import HttpStatus from 'http-status-codes';
 import { query } from 'winston';
-import bookshelf from '../config/bookshelf';
-import knex from '../config/knex';
+import bookshelf from '../../common-modules/server/config/bookshelf';
+import knex from '../../common-modules/server/config/knex';
 import Report from '../models/report.model';
 import ReportType from '../models/reportType.model';
 import Student from '../models/student.model';
 import Teacher from '../models/teacher.model';
 import { getListFromTable } from '../utils/commonUtils';
-import genericController, { applyFilters, fetchPage } from '../../common-modules/server/generic.controller';
+import genericController, { applyFilters, fetchPage } from '../../common-modules/server/controllers/generic.controller';
 
 export const { findById, store, update, destroy, uploadMultiple } = genericController(Report);
 
