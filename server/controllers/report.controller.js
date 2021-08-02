@@ -7,7 +7,7 @@ import ReportType from '../models/reportType.model';
 import Student from '../models/student.model';
 import Teacher from '../models/teacher.model';
 import { getListFromTable } from '../utils/commonUtils';
-import genericController, { applyFilters, fetchPage } from './generic.controller';
+import genericController, { applyFilters, fetchPage } from '../../common-modules/server/generic.controller';
 
 export const { findById, store, update, destroy, uploadMultiple } = genericController(Report);
 
