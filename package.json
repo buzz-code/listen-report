@@ -1,5 +1,6 @@
 {
-  "name": "express-mysql-react-redux",
+  "name": "listen-report",
+  "displayName": "Listen Report",
   "version": "1.0.0",
   "description": "MySQL, Express, React/Redux Boilerplate Application",
   "scripts": {

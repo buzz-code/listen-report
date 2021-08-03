@@ -1,7 +1,9 @@
+const PACKAGE = require('./package.json');
+
 module.exports = {
   apps: [
     {
-      name: 'listen-report',
+      name: PACKAGE.name,
       script: './index.js',
       watch: false,
       env: {
