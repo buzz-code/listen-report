@@ -25,14 +25,10 @@ router.use(isAuthenticated);
  *         type: integer
  *         description: Unique identifier representing a specific user
  *         example: 2
- *       first_name:
+ *       name:
  *         type: string
- *         description: first name of the user
- *         example: Krishna
- *       last_name:
- *         type: string
- *         description: last name of the user
- *         example: Timilsina
+ *         description: name of the user
+ *         example: Krishna Timilsina
  *       email:
  *         type: string
  *         description: email of the user
