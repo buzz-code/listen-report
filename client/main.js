@@ -9,9 +9,9 @@ import { create } from 'jss';
 import rtl from 'jss-rtl';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 
-import store, { history } from './store/configureStore';
-import { verifyToken } from './services/tokenService';
-import App from './containers/app/AppContainer';
+import store, { history } from '../common-modules/client/store/configureStore';
+import { verifyToken } from './../common-modules/client/services/tokenService';
+import App from '../common-modules/client/containers/app/AppContainer';
 
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 

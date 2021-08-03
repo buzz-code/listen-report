@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 
-import Table from '../../components/table/Table';
+import Table from '../../../common-modules/client/components/table/Table';
 
 const getColumns = () => [{ field: 'name', title: 'סוג צפיה' }];
 const getFilters = () => [{ field: 'name', label: 'סוג צפיה', type: 'text', operator: 'like' }];

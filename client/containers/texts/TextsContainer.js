@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 
-import Table from '../../components/table/Table';
+import Table from '../../../common-modules/client/components/table/Table';
 
 const getColumns = () => [
   { field: 'name', title: 'שם', editable: 'onAdd' },
