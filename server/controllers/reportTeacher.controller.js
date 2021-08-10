@@ -1,6 +1,6 @@
 import ReportTeacher from '../models/reportTeacher.model';
 import Teacher from '../models/teacher.model';
-import { getListFromTable } from '../utils/commonUtils';
+import { getListFromTable } from '../../common-modules/server/utils/common';
 import genericController from '../../common-modules/server/controllers/generic.controller';
 
 export const { findAll, findById, store, update, destroy, uploadMultiple } = genericController(ReportTeacher);
