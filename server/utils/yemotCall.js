@@ -45,6 +45,19 @@ export class YemotCall extends CallBase {
         );
     }
 
+    async notifySavedSuccessfully() {
+        await this.send(
+            this.id_list_message({ type: 'text', text: this.texts.recordWasSavedSuccessfully }),
+            this.hangup()
+        );
+    }
+    async notifyNotSaved() {
+        await this.send(
+            this.id_list_message({ type: 'text', text: this.texts.recordWasNotSaved }),
+            this.hangup()
+        );
+    }
+
     async handleStudentCall(student) {
         await this.askForEnterAndExitHour(student.name);
         await this.getTeacherDetails();
@@ -74,17 +87,11 @@ export class YemotCall extends CallBase {
                         .save();
                 }
             }
-            await this.send(
-                this.id_list_message({ type: 'text', text: this.texts.recordWasSavedSuccessfully }),
-                this.hangup()
-            );
+            await this.notifySavedSuccessfully();
         }
         catch (e) {
             console.log('catch yemot exception', e);
-            await this.send(
-                this.id_list_message({ type: 'text', text: this.texts.recordWasNotSaved }),
-                this.hangup()
-            );
+            await this.notifyNotSaved();
         }
     }
 
@@ -173,17 +180,11 @@ export class YemotCall extends CallBase {
                 teaching_students: this.params.teachingStudents,
             }).save();
 
-            await this.send(
-                this.id_list_message({ type: 'text', text: this.texts.recordWasSavedSuccessfully }),
-                this.hangup()
-            );
+            await this.notifySavedSuccessfully();
         }
         catch (e) {
             console.log('catch yemot exception', e);
-            await this.send(
-                this.id_list_message({ type: 'text', text: this.texts.recordWasNotSaved }),
-                this.hangup()
-            );
+            await this.notifyNotSaved();
         }
     }
 }
