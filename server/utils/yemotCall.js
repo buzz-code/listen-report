@@ -34,15 +34,19 @@ export class YemotCall extends CallBase {
         }
     }
 
-    async handleStudentCall(student) {
+    async askForEnterAndExitHour(name) {
         await this.send(
-            this.read({ type: 'text', text: format(this.texts.welcomeAndTypeEnterHour, student.name) },
+            this.read({ type: 'text', text: format(this.texts.welcomeAndTypeEnterHour, name) },
                 'enterHour', 'tap', { max: 4, min: 4, block_asterisk: true })
         );
         await this.send(
             this.read({ type: 'text', text: this.texts.typeExitHour },
                 'exitHour', 'tap', { max: 4, min: 4, block_asterisk: true })
         );
+    }
+
+    async handleStudentCall(student) {
+        await this.askForEnterAndExitHour(student.name);
         await this.getTeacherDetails();
         try {
             const baseReport = {
@@ -149,14 +153,7 @@ export class YemotCall extends CallBase {
     }
 
     async handleTeacherCall(teacher) {
-        await this.send(
-            this.read({ type: 'text', text: format(this.texts.welcomeAndTypeEnterHour, teacher.name) },
-                'enterHour', 'tap', { max: 4, min: 4, block_asterisk: true })
-        );
-        await this.send(
-            this.read({ type: 'text', text: this.texts.typeExitHour },
-                'exitHour', 'tap', { max: 4, min: 4, block_asterisk: true })
-        );
+        await this.askForEnterAndExitHour(teacher.name);
         await this.send(
             this.read({ type: 'text', text: this.texts.typeWatchingStudents },
                 'watchingStudents', 'tap', { max: 2, min: 1, block_asterisk: true })
