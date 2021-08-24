@@ -3,18 +3,34 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Table from '../../../common-modules/client/components/table/Table';
 import * as crudAction from '../../../common-modules/client/actions/crudAction';
+import { getPropsForAutoComplete } from '../../../common-modules/client/utils/formUtil';
 
-const getColumns = (lookups) => [
-  { field: 'student_id', title: 'תלמידה', lookup: lookups.students },
+const getColumns = ({ students, teachers, reportTypes }) => [
+  {
+    field: 'student_id',
+    title: 'תלמידה',
+    columnOrder: 'students.name',
+    ...getPropsForAutoComplete('student_id', students),
+  },
   { field: 'student_group', title: 'התמחות', editable: 'never' },
   { field: 'enter_hour', title: 'שעת כניסה' },
   { field: 'exit_hour', title: 'שעת יציאה' },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
-  { field: 'teacher_id', title: 'מורה', lookup: lookups.teachers },
+  {
+    field: 'teacher_id',
+    title: 'מורה',
+    columnOrder: 'teachers.name',
+    ...getPropsForAutoComplete('teacher_id', teachers),
+  },
   { field: 'teacher_full_phone', title: 'טלפון מורה' },
   { field: 'lesson_number', title: 'מספר שיעור' },
   { field: 'other_students', title: 'תלמידות נוספות' },
-  { field: 'report_type_id', title: 'סוג דיווח', lookup: lookups.reportTypes },
+  {
+    field: 'report_type_id',
+    title: 'סוג דיווח',
+    columnOrder: 'report_types.name',
+    ...getPropsForAutoComplete('report_type_id', reportTypes),
+  },
 ];
 const getFilters = () => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
@@ -29,9 +45,6 @@ const getFilters = () => [
   { field: 'report_types.name', label: 'סוג דיווח', type: 'text', operator: 'like' },
 ];
 
-const getEditLookup = (data) =>
-  data ? Object.fromEntries(data.map(({ id, name }) => [id, name])) : {};
-
 const ReportsContainer = ({ entity, title }) => {
   const dispatch = useDispatch();
   const {
@@ -42,15 +55,7 @@ const ReportsContainer = ({ entity, title }) => {
     dispatch(crudAction.customHttpRequest(entity, 'GET', 'get-edit-data'));
   }, []);
 
-  const editDataLists = useMemo(
-    () => ({
-      students: getEditLookup(editData && editData.students),
-      teachers: { ...getEditLookup(editData && editData.teachers), null: 'לא נבחר' },
-      reportTypes: getEditLookup(editData && editData.reportTypes),
-    }),
-    [editData]
-  );
-  const columns = useMemo(() => getColumns(editDataLists), [editData]);
+  const columns = useMemo(() => getColumns(editData || {}), [editData]);
   const filters = useMemo(() => getFilters(), []);
 
   const manipulateDataToSave = (dataToSave) => ({

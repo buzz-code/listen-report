@@ -3,9 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Table from '../../../common-modules/client/components/table/Table';
 import * as crudAction from '../../../common-modules/client/actions/crudAction';
+import { getPropsForAutoComplete } from '../../../common-modules/client/utils/formUtil';
 
-const getColumns = (lookups) => [
-  { field: 'teacher_id', title: 'מורה', lookup: lookups.teachers },
+const getColumns = ({ teachers }) => [
+  {
+    field: 'teacher_id',
+    title: 'מורה',
+    columnOrder: 'teachers.name',
+    ...getPropsForAutoComplete('teacher_id', teachers),
+  },
   { field: 'enter_hour', title: 'שעת כניסה' },
   { field: 'exit_hour', title: 'שעת יציאה' },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
@@ -22,9 +28,6 @@ const getFilters = () => [
   { field: 'teaching_students', label: 'תלמידות מוסרות', type: 'text', operator: 'like' },
 ];
 
-const getEditLookup = (data) =>
-  data ? Object.fromEntries(data.map(({ id, name }) => [id, name])) : {};
-
 const ReportTeacherContainer = ({ entity, title }) => {
   const dispatch = useDispatch();
   const {
@@ -35,13 +38,7 @@ const ReportTeacherContainer = ({ entity, title }) => {
     dispatch(crudAction.customHttpRequest(entity, 'GET', 'get-edit-data'));
   }, []);
 
-  const editDataLists = useMemo(
-    () => ({
-      teachers: getEditLookup(editData && editData.teachers),
-    }),
-    [editData]
-  );
-  const columns = useMemo(() => getColumns(editDataLists), [editData]);
+  const columns = useMemo(() => getColumns(editData || {}), [editData]);
   const filters = useMemo(() => getFilters(), []);
 
   const manipulateDataToSave = (dataToSave) => ({
