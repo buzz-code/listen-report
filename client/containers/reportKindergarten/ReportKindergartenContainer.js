@@ -9,7 +9,7 @@ const getColumns = ({ students }) => [
   {
     field: 'student_id',
     title: 'תלמידה',
-    columnOrder: 'students.name',
+    columnOrder: 'kindergarten_students.name',
     ...getPropsForAutoComplete('student_id', students),
   },
   { field: 'enter_hour', title: 'שעת כניסה' },
@@ -18,7 +18,7 @@ const getColumns = ({ students }) => [
   { field: 'watched_lessons', title: 'שיעורי צפיה', type: 'numeric' },
 ];
 const getFilters = () => [
-  { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
+  { field: 'kindergarten_students.name', label: 'תלמידה', type: 'text', operator: 'like' },
   { field: 'enter_hour', label: 'שעת כניסה', type: 'text', operator: 'like' },
   { field: 'exit_hour', label: 'שעת יציאה', type: 'text', operator: 'like' },
   { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },

@@ -1,9 +1,26 @@
 import ReportKindergarten from '../models/reportKindergarten.model';
 import KindergartenStudent from '../models/kindergartenStudent.model';
 import { getListFromTable } from '../../common-modules/server/utils/common';
-import genericController from '../../common-modules/server/controllers/generic.controller';
+import genericController, { applyFilters, fetchPage } from '../../common-modules/server/controllers/generic.controller';
 
-export const { findAll, findById, store, update, destroy, uploadMultiple } = genericController(ReportKindergarten);
+export const { findById, store, update, destroy, uploadMultiple } = genericController(ReportKindergarten);
+
+/**
+ * Find all the items
+ *
+ * @param {object} req
+ * @param {object} res
+ * @returns {*}
+ */
+export async function findAll(req, res) {
+    const dbQuery = new ReportKindergarten({ user_id: req.currentUser.id })
+        .query(qb => {
+            qb.innerJoin('kindergarten_students', 'kindergarten_students.id', 'report_kindergarten.student_id')
+            qb.select('report_kindergarten.*')
+        });
+    applyFilters(dbQuery, req.query.filters);
+    fetchPage({ dbQuery }, req.query, res);
+}
 
 
 /**

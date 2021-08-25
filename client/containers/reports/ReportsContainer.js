@@ -64,7 +64,6 @@ const ReportsContainer = ({ entity, title }) => {
       dataToSave.report_date instanceof Date
         ? dataToSave.report_date.toISOString().substr(0, 10)
         : dataToSave.report_date.substr(0, 10),
-    teacher_id: dataToSave.teacher_id === 'null' ? null : dataToSave.teacher_id,
     student_group: undefined,
   });
 
