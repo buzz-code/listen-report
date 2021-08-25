@@ -3,6 +3,7 @@ import format from 'string-format';
 import * as queryHelper from './queryHelper';
 import Report from "../models/report.model";
 import ReportTeacher from "../models/reportTeacher.model";
+import ReportKindergarten from "../models/reportKindergarten.model";
 
 export class YemotCall extends CallBase {
     constructor(params, callId, user) {
@@ -19,10 +20,15 @@ export class YemotCall extends CallBase {
                 await this.handleTeacherCall(teacher);
             }
             else {
-                await this.send(
-                    this.id_list_message({ type: 'text', text: this.texts.phoneIsNotRecognizedInTheSystem }),
-                    this.hangup()
-                );
+                const kindergartenStudent = await this.getKindergartenStudent();
+                if (kindergartenStudent) {
+                    await this.handleKindergartenStudentCall(kindergartenStudent);
+                } else {
+                    await this.send(
+                        this.id_list_message({ type: 'text', text: this.texts.phoneIsNotRecognizedInTheSystem }),
+                        this.hangup()
+                    );
+                }
             }
         }
         catch (e) {
@@ -32,6 +38,24 @@ export class YemotCall extends CallBase {
         } finally {
             this.end();
         }
+    }
+
+    async getKindergartenStudent() {
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askIfIsKindergartenStudent },
+                'isKindergartenStudent', 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+        if (this.params.isKindergartenStudent === '2') {
+            return null;
+        }
+
+        await this.send(
+            this.read({ type: 'text', text: this.texts.typeKindergartenTz },
+                'kindergartenTz', 'tap', { max: 9, min: 1, block_asterisk: true })
+        );
+
+        const student = queryHelper.getKindergartenStudentByUserIdAndTz(this.user.id, this.params.kindergartenTz);
+        return student;
     }
 
     async askForEnterAndExitHour(name) {
@@ -178,6 +202,30 @@ export class YemotCall extends CallBase {
                 report_date: new Date().toISOString().substr(0, 10),
                 watching_students: this.params.watchingStudents,
                 teaching_students: this.params.teachingStudents,
+            }).save();
+
+            await this.notifySavedSuccessfully();
+        }
+        catch (e) {
+            console.log('catch yemot exception', e);
+            await this.notifyNotSaved();
+        }
+    }
+
+    async handleKindergartenStudentCall(student) {
+        await this.askForEnterAndExitHour(student.name);
+        await this.send(
+            this.read({ type: 'text', text: this.texts.typeWatchedLessons },
+                'watchedLessons', 'tap', { max: 2, min: 1, block_asterisk: true })
+        );
+        try {
+            await new ReportKindergarten({
+                user_id: this.user.id,
+                student_id: student.id,
+                enter_hour: this.params.enterHour,
+                exit_hour: this.params.exitHour,
+                report_date: new Date().toISOString().substr(0, 10),
+                watched_lessons: this.params.watchedLessons,
             }).save();
 
             await this.notifySavedSuccessfully();
