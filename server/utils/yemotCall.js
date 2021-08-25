@@ -222,6 +222,7 @@ export class YemotCall extends CallBase {
             await new ReportKindergarten({
                 user_id: this.user.id,
                 student_id: student.id,
+                api_phone: this.params.ApiPhone,
                 enter_hour: this.params.enterHour,
                 exit_hour: this.params.exitHour,
                 report_date: new Date().toISOString().substr(0, 10),

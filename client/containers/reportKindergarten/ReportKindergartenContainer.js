@@ -12,6 +12,7 @@ const getColumns = ({ students }) => [
     columnOrder: 'kindergarten_students.name',
     ...getPropsForAutoComplete('student_id', students),
   },
+  { field: 'api_phone', title: 'טלפון' },
   { field: 'enter_hour', title: 'שעת כניסה' },
   { field: 'exit_hour', title: 'שעת יציאה' },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
@@ -19,6 +20,7 @@ const getColumns = ({ students }) => [
 ];
 const getFilters = () => [
   { field: 'kindergarten_students.name', label: 'תלמידה', type: 'text', operator: 'like' },
+  { field: 'api_phone', label: 'טלפון', type: 'text', operator: 'like' },
   { field: 'enter_hour', label: 'שעת כניסה', type: 'text', operator: 'like' },
   { field: 'exit_hour', label: 'שעת יציאה', type: 'text', operator: 'like' },
   { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
