@@ -20,8 +20,8 @@ export function getStudentAndTeacherByUserIdAndPhone(user_id, phone_number) {
     return Promise.all([student, teacher]);
 }
 
-export function getKindergartenStudentByUserIdAndTz(user_id, student_tz) {
-    return new KindergartenStudent({ user_id, student_tz })
+export function getKindergartenStudentByUserIdAndTz(user_id, tz) {
+    return new KindergartenStudent({ user_id, tz })
         .fetch({ require: false })
         .then(res => res ? res.toJSON() : null);
 }
