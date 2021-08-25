@@ -14,9 +14,11 @@ import * as titles from './entity-title';
 import Dashboard from '../containers/dashboard/DashboardContainer';
 import Reports from '../containers/reports/ReportsContainer';
 import ReportTeacher from '../containers/reportTeacher/ReportTeacherContainer';
+import ReportKindergarten from '../containers/reportKindergarten/ReportKindergartenContainer';
 import ReportTypes from '../containers/reportTypes/ReportTypesContainer';
 import Students from '../containers/students/StudentsContainer';
 import Teachers from '../containers/teachers/TeachersContainer';
+import KindergartenStudent from '../containers/kindergartenStudent/KindergartenStudentContainer';
 import Texts from '../containers/texts/TextsContainer';
 import ExcelImport from '../containers/excel-import/ExcelImportContainer';
 import StudentReports from '../containers/studentReports/StudentReportsContainer';
@@ -49,6 +51,13 @@ export default [
       props: { entity: entities.REPORT_TEACHER, title: titles.REPORT_TEACHER },
     },
     {
+      path: '/report-kindergarten',
+      component: ReportKindergarten,
+      icon: ListAltOutlinedIcon,
+      title: titles.REPORT_KINDERGARTEN,
+      props: { entity: entities.REPORT_KINDERGARTEN, title: titles.REPORT_KINDERGARTEN },
+    },
+    {
       path: '/students',
       component: Students,
       icon: PeopleIcon,
@@ -61,6 +70,13 @@ export default [
       icon: SupervisedUserCircleIcon,
       title: titles.TEACHERS,
       props: { entity: entities.TEACHERS, title: titles.TEACHERS },
+    },
+    {
+      path: '/kindergarten-students',
+      component: KindergartenStudent,
+      icon: PeopleIcon,
+      title: titles.KINDERGARTEN_STUDENTS,
+      props: { entity: entities.KINDERGARTEN_STUDENTS, title: titles.KINDERGARTEN_STUDENTS },
     },
     {
       path: '/report-types',

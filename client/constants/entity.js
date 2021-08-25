@@ -1,9 +1,11 @@
 export const USERS = 'users';
 export const REPORTS = 'reports';
 export const REPORT_TEACHER = 'report-teacher';
+export const REPORT_KINDERGARTEN = 'report-kindergarten';
 export const REPORT_TYPES = 'report-types';
 export const STUDENTS = 'students';
 export const TEACHERS = 'teachers';
+export const KINDERGARTEN_STUDENTS = 'kindergarten-students';
 export const TEXTS = 'texts';
 export const STUDENT_REPORTS = 'reports/getStudentReport';
 export const TEACHER_REPORTS = 'reports/getTeacherReport';

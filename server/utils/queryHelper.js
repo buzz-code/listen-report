@@ -2,6 +2,7 @@ import Student from "../models/student.model";
 import Teacher from "../models/teacher.model";
 import ReportType from "../models/reportType.model";
 import User from "../models/user.model";
+import KindergartenStudent from "../models/kindergartenStudent.model";
 
 export function getUserByPhone(phone_number) {
     return new User({ phone_number })
@@ -17,6 +18,12 @@ export function getStudentAndTeacherByUserIdAndPhone(user_id, phone_number) {
         .fetch({ require: false })
         .then(res => res ? res.toJSON() : null);
     return Promise.all([student, teacher]);
+}
+
+export function getKindergartenStudentByUserIdAndTz(user_id, student_tz) {
+    return new KindergartenStudent({ user_id, student_tz })
+        .fetch({ require: false })
+        .then(res => res ? res.toJSON() : null);
 }
 
 export function getTeacherByUserIdAndLastDigits(user_id, lastDigits) {

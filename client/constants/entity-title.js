@@ -1,9 +1,11 @@
 export const USERS = 'משתמשים';
 export const REPORTS = 'צפיות';
 export const REPORT_TEACHER = 'צפיות- נתוני מורות';
+export const REPORT_KINDERGARTEN = 'צפיות- נתוני גננות';
 export const REPORT_TYPES = 'סוגי צפיה';
 export const STUDENTS = 'תלמידות';
 export const TEACHERS = 'מורות';
+export const KINDERGARTEN_STUDENTS = 'תלמידות גננות';
 export const TEXTS = 'הודעות';
 export const STUDENT_REPORTS = 'דו"ח לתלמידה';
 export const TEACHER_REPORTS = 'דו"ח למורה';
