@@ -1,5 +1,6 @@
 import * as reportCtrl from '../controllers/report.controller';
 import genericRoute from '../../common-modules/server/routes/generic.route';
+import { exportPdf } from '../../common-modules/server/utils/template';
 
 const router = genericRoute(reportCtrl, router => {
     router.route('/get-edit-data')
@@ -30,6 +31,11 @@ const router = genericRoute(reportCtrl, router => {
     router.route('/getMonthlyReport')
         .get((req, res) => {
             reportCtrl.getMonthlyReport(req, res);
+        });
+ 
+    router.route('/:reportId/export-pdf')
+        .post((req, res) => {
+            exportPdf(req, res);
         });
 });
 
