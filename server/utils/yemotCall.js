@@ -59,8 +59,14 @@ export class YemotCall extends CallBase {
     }
 
     async askForEnterAndExitHour(name) {
+        const firstMesssage = [];
+        if (this.existingReport) {
+            firstMesssage.push(this.texts.existingReportWillBeDeleted);
+        }
+
+        firstMesssage.push(format(this.texts.welcomeAndTypeEnterHour, name));
         await this.send(
-            this.read({ type: 'text', text: format(this.texts.welcomeAndTypeEnterHour, name) },
+            this.read({ type: 'text', text: firstMesssage },
                 'enterHour', 'tap', { max: 4, min: 4, block_asterisk: true })
         );
         await this.send(
@@ -70,6 +76,10 @@ export class YemotCall extends CallBase {
     }
 
     async notifySavedSuccessfully() {
+        if (this.existingReport) {
+            await this.existingReport.remove();
+        }
+        
         await this.send(
             this.id_list_message({ type: 'text', text: this.texts.recordWasSavedSuccessfully }),
             this.hangup()
@@ -83,6 +93,7 @@ export class YemotCall extends CallBase {
     }
 
     async handleStudentCall(student) {
+        this.existingReport = await queryHelper.getExistingStudentReport(student.id);
         await this.askForEnterAndExitHour(student.name);
         await this.getTeacherDetails();
         try {
@@ -184,6 +195,7 @@ export class YemotCall extends CallBase {
     }
 
     async handleTeacherCall(teacher) {
+        this.existingReport = await queryHelper.getExistingTeacherReport(teacher.id);
         await this.askForEnterAndExitHour(teacher.name);
         await this.send(
             this.read({ type: 'text', text: this.texts.typeNumberOfLessons },
@@ -223,6 +235,7 @@ export class YemotCall extends CallBase {
     }
 
     async handleKindergartenStudentCall(student) {
+        this.existingReport = await queryHelper.getExistingKindergartenStudentReport(student.id);
         await this.askForEnterAndExitHour(student.name);
         await this.send(
             this.read({ type: 'text', text: this.texts.typeWatchedLessons },
