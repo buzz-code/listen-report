@@ -22,6 +22,7 @@ import KindergartenStudent from '../containers/kindergartenStudent/KindergartenS
 import Texts from '../containers/texts/TextsContainer';
 import ExcelImport from '../containers/excel-import/ExcelImportContainer';
 import StudentReports from '../containers/studentReports/StudentReportsContainer';
+import TeacherSalaryReport from '../containers/teacherSalaryReport/TeacherSalaryReportContainer';
 import TeacherReports from '../containers/teacherReports/TeacherReportsContainer';
 import OrganizationReports from '../containers/organizationReports/OrganizationReportsContainer';
 import DailyReports from '../containers/dailyReports/DailyReportsContainer';
@@ -101,6 +102,13 @@ export default [
       icon: AssignmentIcon,
       title: titles.STUDENT_REPORTS,
       props: { entity: entities.STUDENT_REPORTS, title: titles.STUDENT_REPORTS },
+    },
+    {
+      path: '/teacher-salary-report',
+      component: TeacherSalaryReport,
+      icon: AssignmentIcon,
+      title: titles.TEACHER_SALARY_REPORTS,
+      props: { entity: entities.TEACHER_SALARY_REPORTS, title: titles.TEACHER_SALARY_REPORTS },
     },
     // {
     //   path: '/teacher-reports',

@@ -6,6 +6,11 @@ const router = genericRoute(reportTeacherCtrl, router => {
         .get((req, res) => {
             reportTeacherCtrl.getEditData(req, res);
         });
+
+    router.route('/getTeacherSalaryReport')
+        .get((req, res) => {
+            reportTeacherCtrl.getTeacherSalaryReport(req, res);
+        });
 });
 
 

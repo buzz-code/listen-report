@@ -8,6 +8,7 @@ export const TEACHERS = 'teachers';
 export const KINDERGARTEN_STUDENTS = 'kindergarten-students';
 export const TEXTS = 'texts';
 export const STUDENT_REPORTS = 'reports/getStudentReport';
+export const TEACHER_SALARY_REPORTS = 'report-teacher/getTeacherSalaryReport';
 export const TEACHER_REPORTS = 'reports/getTeacherReport';
 export const ORGANIATION_REPORTS = 'reports/getOrganizationReport';
 export const DAILY_REPORTS = 'reports/getDailyReport';
