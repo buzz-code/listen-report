@@ -186,12 +186,20 @@ export class YemotCall extends CallBase {
     async handleTeacherCall(teacher) {
         await this.askForEnterAndExitHour(teacher.name);
         await this.send(
+            this.read({ type: 'text', text: this.texts.typeNumberOfLessons },
+                'howManyLessons', 'tap', { max: 2, min: 1, block_asterisk: true })
+        );
+        await this.send(
             this.read({ type: 'text', text: this.texts.typeWatchingStudents },
                 'watchingStudents', 'tap', { max: 2, min: 1, block_asterisk: true })
         );
         await this.send(
             this.read({ type: 'text', text: this.texts.typeTeachingStudents },
                 'teachingStudents', 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.typeWasTelephone },
+                'wasTelephone', 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         try {
             await new ReportTeacher({
@@ -200,8 +208,10 @@ export class YemotCall extends CallBase {
                 enter_hour: this.params.enterHour,
                 exit_hour: this.params.exitHour,
                 report_date: new Date().toISOString().substr(0, 10),
+                lessons_number: this.params.howManyLessons,
                 watching_students: this.params.watchingStudents,
                 teaching_students: this.params.teachingStudents,
+                was_telephone: this.params.wasTelephone == '1',
             }).save();
 
             await this.notifySavedSuccessfully();

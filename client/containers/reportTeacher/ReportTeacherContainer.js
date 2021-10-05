@@ -15,8 +15,10 @@ const getColumns = ({ teachers }) => [
   { field: 'enter_hour', title: 'שעת כניסה' },
   { field: 'exit_hour', title: 'שעת יציאה' },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
+  { field: 'lessons_number', title: 'מספר שיעורים', type: 'numeric' },
   { field: 'watching_students', title: 'תלמידות צופות', type: 'numeric' },
   { field: 'teaching_students', title: 'תלמידות מוסרות', type: 'numeric' },
+  { field: 'was_telephone', title: 'דיון טלפוני', type: 'boolean' },
 ];
 const getFilters = () => [
   { field: 'teachers.name', label: 'מורה', type: 'text', operator: 'like' },
