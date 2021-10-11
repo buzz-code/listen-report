@@ -77,7 +77,7 @@ export class YemotCall extends CallBase {
 
     async notifySavedSuccessfully() {
         if (this.existingReport) {
-            await this.existingReport.remove();
+            await this.existingReport.destroy();
         }
         
         await this.send(
