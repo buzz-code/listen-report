@@ -43,17 +43,35 @@ export function getReportTypeByUserId(userId) {
         .then(res => res.toJSON());
 }
 
-export function getExistingStudentReport(student_id) {
-    return new Report().where({ student_id, report_date: moment().format('YYYY-MM-DD') })
-        .fetchAll();
+export async function getExistingStudentReport(student_id) {
+    const query = new Report().where({ student_id, report_date: moment().format('YYYY-MM-DD') })
+    try {
+        await query.fetchAll({ require: true });
+        return query;
+    }
+    catch {
+        return null;
+    }
 }
 
-export function getExistingTeacherReport(teacher_id) {
-    return new ReportTeacher().where({ teacher_id, report_date: moment().format('YYYY-MM-DD') })
-        .fetchAll();
+export async function getExistingTeacherReport(teacher_id) {
+    const query = new ReportTeacher().where({ teacher_id, report_date: moment().format('YYYY-MM-DD') })
+    try {
+        await query.fetchAll({ require: true });
+        return query;
+    }
+    catch {
+        return null;
+    }
 }
 
-export function getExistingKindergartenStudentReport(student_id) {
-    return new ReportKindergarten().where({ student_id, report_date: moment().format('YYYY-MM-DD') })
-        .fetchAll();
+export async function getExistingKindergartenStudentReport(student_id) {
+    const query = new ReportKindergarten().where({ student_id, report_date: moment().format('YYYY-MM-DD') })
+    try {
+        await query.fetchAll({ require: true });
+        return query;
+    }
+    catch {
+        return null;
+    }
 }
