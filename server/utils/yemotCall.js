@@ -75,11 +75,13 @@ export class YemotCall extends CallBase {
         );
     }
 
-    async notifySavedSuccessfully() {
+    async deleteExistingReport() {
         if (this.existingReport) {
             await this.existingReport.destroy();
         }
-        
+    }
+
+    async notifySavedSuccessfully() {
         await this.send(
             this.id_list_message({ type: 'text', text: this.texts.recordWasSavedSuccessfully }),
             this.hangup()
@@ -97,6 +99,8 @@ export class YemotCall extends CallBase {
         await this.askForEnterAndExitHour(student.name);
         await this.getTeacherDetails();
         try {
+            await this.deleteExistingReport();
+
             const baseReport = {
                 user_id: this.user.id,
                 student_id: student.id,
@@ -214,6 +218,8 @@ export class YemotCall extends CallBase {
                 'wasTelephone', 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         try {
+            await this.deleteExistingReport();
+
             await new ReportTeacher({
                 user_id: this.user.id,
                 teacher_id: teacher.id,
@@ -242,6 +248,8 @@ export class YemotCall extends CallBase {
                 'watchedLessons', 'tap', { max: 2, min: 1, block_asterisk: true })
         );
         try {
+            await this.deleteExistingReport();
+
             await new ReportKindergarten({
                 user_id: this.user.id,
                 student_id: student.id,
