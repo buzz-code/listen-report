@@ -108,23 +108,18 @@ export class YemotCall extends CallBase {
                 exit_hour: this.params.exitHour,
                 report_date: new Date().toISOString().substr(0, 10),
             };
-            let lessonIndex = 1;
+
             for (const teacherReport of this.params.teacherReport) {
-                const baseTeacherReport = {
+                await new Report({
                     ...baseReport,
                     teacher_id: teacherReport.teacher?.id,
                     teacher_full_phone: teacherReport.teacherFullPhone,
                     teacher_last_digits: teacherReport.teacherLastDigits,
-                };
-                for (const lesson of teacherReport.lessons) {
-                    await new Report({
-                        ...baseTeacherReport,
-                        lesson_number: lessonIndex++,
-                        other_students: lesson.otherStudents,
-                        report_type_id: lesson.reportType.id,
-                    })
-                        .save();
-                }
+                    lesson_number: teacherReport.lesson.lessonNumber,
+                    other_students: teacherReport.lesson.otherStudents,
+                    report_type_id: teacherReport.lesson.reportType,
+                })
+                    .save();
             }
             await this.notifySavedSuccessfully();
         }
@@ -156,28 +151,15 @@ export class YemotCall extends CallBase {
                     'lessonNumber', 'tap', { max: 1, min: 1, block_asterisk: true })
             );
         }
-        const lessonNumber = Number(this.params.lessonNumber);
-        const lessons = [];
-        const types = await queryHelper.getReportTypeByUserId(this.user.id);
-        let reportTypeMessage = this.texts.chooseAttendanceTypeByLesson;
-        for (const index in types) {
-            reportTypeMessage += format(this.texts.forAttendanceTypeXPressY, types[index].name, (Number(index) + 1))
-        }
 
-        for (let i = 0; i < lessonNumber; i++) {
-            await this.send(
-                this.id_list_message({ type: 'text', text: format(this.texts.lessonNumber, i + 1) }),
-                this.read({ type: 'text', text: this.texts.askForOtherStudentsNumber },
-                    'otherStudents', 'tap', { max: 2, min: 1, block_asterisk: true })
-            );
-            const otherStudents = Number(this.params.otherStudents);
-            await this.send(
-                this.read({ type: 'text', text: reportTypeMessage },
-                    'reportType', 'tap', { max: 1, min: 1, block_asterisk: true })
-            );
-            const reportType = Number(this.params.reportType);
-            lessons.push({ otherStudents, reportType: types[reportType - 1] });
-        }
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askForOtherStudentsNumber },
+                'otherStudents', 'tap', { max: 2, min: 1, block_asterisk: true })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askForReportType },
+                'reportType', 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
 
         if (!this.params.teacherReport) {
             this.params.teacherReport = [];
@@ -186,7 +168,11 @@ export class YemotCall extends CallBase {
             teacherLastDigits: this.params.teacherLastDigits,
             teacherFullPhone: teacher?.full_phone || this.params.teacherFullPhone,
             teacher,
-            lessons,
+            lesson: {
+                lessonNumber: Number(this.params.lessonNumber),
+                otherStudents: Number(this.params.otherStudents),
+                reportType: Number(this.params.reportType),
+            },
         });
 
         await this.send(
