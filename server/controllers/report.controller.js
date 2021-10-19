@@ -63,15 +63,10 @@ export function getStudentReport(req, res) {
             qb.innerJoin('students', 'students.id', 'reports.student_id')
         })
     applyFilters(dbQuery, req.query.filters);
-    const countQuery = dbQuery.clone().query()
-        .countDistinct({ count: ['student_id', 'report_date', 'enter_hour', 'exit_hour'] })
-        .then(res => res[0].count);
     dbQuery.query(qb => {
-        qb.groupBy('student_id', 'report_date', 'enter_hour', 'exit_hour')
-        qb.select('students.tz as student_tz', 'students.name as student_name', 'students.group as student_group', 'report_date', 'enter_hour', 'exit_hour')
-        qb.count({ count: 'reports.id' })
+        qb.select('students.tz as student_tz', 'students.name as student_name', 'students.group as student_group', 'report_date', 'enter_hour', 'exit_hour', 'lesson_number', 'other_students', 'report_type_id')
     });
-    fetchPage({ dbQuery, countQuery }, req.query, res);
+    fetchPage({ dbQuery }, req.query, res);
 }
 
 /**
