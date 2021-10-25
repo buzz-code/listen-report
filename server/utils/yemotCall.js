@@ -207,6 +207,10 @@ export class YemotCall extends CallBase {
             this.read({ type: 'text', text: this.texts.typeTrainingTeacherKey },
                 'trainingTeacher', 'tap', { max: 1, min: 1, block_asterisk: true })
         );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.typeSpeciallityKey },
+                'speciallity', 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
         try {
             await this.deleteExistingReport();
 
@@ -221,6 +225,7 @@ export class YemotCall extends CallBase {
                 teaching_students: this.params.teachingStudents,
                 was_telephone: this.params.wasTelephone == '1',
                 training_teacher: this.params.trainingTeacher,
+                speciallity: this.params.speciallity,
             }).save();
 
             await this.notifySavedSuccessfully();

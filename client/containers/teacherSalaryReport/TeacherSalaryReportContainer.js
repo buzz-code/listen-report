@@ -12,6 +12,8 @@ const getColumns = () => [
   { field: 'watching_students', title: 'תלמידות צופות', type: 'numeric' },
   { field: 'teaching_students', title: 'תלמידות מוסרות', type: 'numeric' },
   { field: 'was_telephone', title: 'דיון טלפוני', type: 'boolean' },
+  { field: 'training_teacher', title: 'מורה מנחה', type: 'numeric' },
+  { field: 'speciallity', title: 'התמחות', type: 'numeric' },
   { field: 'teacher_salary', title: 'שכר' },
 ];
 

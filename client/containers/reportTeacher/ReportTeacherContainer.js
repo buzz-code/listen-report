@@ -20,6 +20,7 @@ const getColumns = ({ teachers }) => [
   { field: 'teaching_students', title: 'תלמידות מוסרות', type: 'numeric' },
   { field: 'was_telephone', title: 'דיון טלפוני', type: 'boolean' },
   { field: 'training_teacher', title: 'מורה מנחה', type: 'numeric' },
+  { field: 'speciallity', title: 'התמחות', type: 'numeric' },
 ];
 const getFilters = () => [
   { field: 'teachers.name', label: 'מורה', type: 'text', operator: 'like' },
@@ -29,6 +30,8 @@ const getFilters = () => [
   { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
   { field: 'watching_students', label: 'תלמידות צופות', type: 'text', operator: 'like' },
   { field: 'teaching_students', label: 'תלמידות מוסרות', type: 'text', operator: 'like' },
+  { field: 'training_teacher', label: 'מורה מנחה', type: 'text', operator: 'like' },
+  { field: 'speciallity', label: 'התמחות', type: 'text', operator: 'like' },
 ];
 
 const ReportTeacherContainer = ({ entity, title }) => {
