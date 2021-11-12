@@ -4,7 +4,7 @@ import Table from '../../../common-modules/client/components/table/Table';
 
 const getColumns = () => [
   { field: 'teacher_tz', title: 'תז מורה' },
-  { field: 'teacher_name', title: 'שם' },
+  { field: 'teacher_name', title: 'שם', defaultSort: 'asc' },
   { field: 'speciallity', title: 'התמחות', type: 'numeric' },
   { field: 'teacher_type_name', title: 'סוג מורה' },
   { field: 'teacher_salary', title: 'שכר' },

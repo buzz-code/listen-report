@@ -4,7 +4,7 @@ import Table from '../../../common-modules/client/components/table/Table';
 
 const getColumns = () => [
   { field: 'teacher_tz', title: 'תז מורה' },
-  { field: 'teacher_name', title: 'שם' },
+  { field: 'teacher_name', title: 'שם', defaultSort: 'asc' },
   { field: 'enter_hour', title: 'שעת כניסה' },
   { field: 'exit_hour', title: 'שעת יציאה' },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
