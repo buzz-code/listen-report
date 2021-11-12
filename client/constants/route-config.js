@@ -23,6 +23,7 @@ import Texts from '../containers/texts/TextsContainer';
 import ExcelImport from '../containers/excel-import/ExcelImportContainer';
 import StudentReports from '../containers/studentReports/StudentReportsContainer';
 import TeacherSalaryReport from '../containers/teacherSalaryReport/TeacherSalaryReportContainer';
+import TeacherSalarySummaryReport from '../containers/teacherSalarySummaryReport/TeacherSalarySummaryReportContainer';
 import TeacherReports from '../containers/teacherReports/TeacherReportsContainer';
 import OrganizationReports from '../containers/organizationReports/OrganizationReportsContainer';
 import DailyReports from '../containers/dailyReports/DailyReportsContainer';
@@ -109,6 +110,16 @@ export default [
       icon: AssignmentIcon,
       title: titles.TEACHER_SALARY_REPORTS,
       props: { entity: entities.TEACHER_SALARY_REPORTS, title: titles.TEACHER_SALARY_REPORTS },
+    },
+    {
+      path: '/teacher-salary-summary-report',
+      component: TeacherSalarySummaryReport,
+      icon: AssignmentIcon,
+      title: titles.TEACHER_SALARY_SUMMARY_REPORTS,
+      props: {
+        entity: entities.TEACHER_SALARY_SUMMARY_REPORTS,
+        title: titles.TEACHER_SALARY_SUMMARY_REPORTS,
+      },
     },
     // {
     //   path: '/teacher-reports',

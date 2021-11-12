@@ -13,6 +13,11 @@ const router = genericRoute(reportTeacherCtrl, router => {
             reportTeacherCtrl.getTeacherSalaryReport(req, res);
         });
 
+    router.route('/getTeacherSalarySummaryReport')
+        .get((req, res) => {
+            reportTeacherCtrl.getTeacherSalarySummaryReport(req, res);
+        });
+
     router.route('/:reportId/export-pdf')
         .post((req, res) => {
             exportPdf(req, res);

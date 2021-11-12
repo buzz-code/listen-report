@@ -9,6 +9,7 @@ export const KINDERGARTEN_STUDENTS = 'תלמידות גננות';
 export const TEXTS = 'הודעות';
 export const STUDENT_REPORTS = 'דו"ח לתלמידה';
 export const TEACHER_SALARY_REPORTS = 'דו"ח שכר למורה';
+export const TEACHER_SALARY_SUMMARY_REPORTS = 'דו"ח שכר מרוכז למורה';
 export const TEACHER_REPORTS = 'דו"ח למורה';
 export const ORGANIATION_REPORTS = 'דו"ח לארגון צפיה';
 export const DAILY_REPORTS = 'דו"ח שכר יומי';
