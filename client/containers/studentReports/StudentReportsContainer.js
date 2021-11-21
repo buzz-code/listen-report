@@ -8,6 +8,7 @@ import { getPropsForAutoComplete } from '../../../common-modules/client/utils/fo
 const getColumns = ({ reportTypes }) => [
   { field: 'student_tz', title: 'תעודת זהות' },
   { field: 'student_name', title: 'שם' },
+  { field: 'student_klass', title: 'כיתה' },
   { field: 'student_group', title: 'התמחות' },
   { field: 'report_date', title: 'תאריך' },
   { field: 'enter_hour', title: 'שעת כניסה' },
@@ -24,6 +25,7 @@ const getColumns = ({ reportTypes }) => [
 const getFilters = () => [
   { field: 'students.tz', label: 'תעודת זהות', type: 'text', operator: 'like' },
   { field: 'students.name', label: 'שם', type: 'text', operator: 'like' },
+  { field: 'students.klass', label: 'כיתה', type: 'text', operator: 'like' },
   { field: 'students.group', label: 'התמחות', type: 'text', operator: 'like' },
   { field: 'enter_hour', label: 'שעת כניסה', type: 'text', operator: 'like' },
   { field: 'exit_hour', label: 'שעת יציאה', type: 'text', operator: 'like' },

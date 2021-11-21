@@ -64,7 +64,7 @@ export function getStudentReport(req, res) {
         })
     applyFilters(dbQuery, req.query.filters);
     dbQuery.query(qb => {
-        qb.select('students.tz as student_tz', 'students.name as student_name', 'students.group as student_group', 'report_date', 'enter_hour', 'exit_hour', 'lesson_number', 'other_students', 'report_type_id')
+        qb.select('students.tz as student_tz', 'students.name as student_name', 'students.klass as student_klass', 'students.group as student_group', 'report_date', 'enter_hour', 'exit_hour', 'lesson_number', 'other_students', 'report_type_id')
     });
     fetchPage({ dbQuery }, req.query, res);
 }
