@@ -186,14 +186,14 @@ export class YemotCall extends CallBase {
 
     async handleTeacherCall(teacher) {
         this.existingReport = await queryHelper.getExistingTeacherReport(teacher.id);
-        await this.askForEnterAndExitHour(teacher.name);
+        // await this.askForEnterAndExitHour(teacher.name);
         await this.send(
             this.read({ type: 'text', text: this.texts.typeNumberOfLessons },
-                'howManyLessons', 'tap', { max: 2, min: 1, block_asterisk: true })
+                'howManyLessons', 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         await this.send(
             this.read({ type: 'text', text: this.texts.typeWatchingStudents },
-                'watchingStudents', 'tap', { max: 2, min: 1, block_asterisk: true })
+                'watchingStudents', 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         await this.send(
             this.read({ type: 'text', text: this.texts.typeTeachingStudents },
