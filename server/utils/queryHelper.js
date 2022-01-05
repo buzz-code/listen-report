@@ -54,8 +54,8 @@ export async function getExistingStudentReport(student_id) {
     }
 }
 
-export async function getExistingTeacherReport(teacher_id) {
-    const query = new ReportTeacher().where({ teacher_id, report_date: moment().format('YYYY-MM-DD') })
+export async function getExistingTeacherReport(teacher_id, report_date) {
+    const query = new ReportTeacher().where({ teacher_id, report_date })
     try {
         await query.clone().fetchAll({ require: true });
         return query;

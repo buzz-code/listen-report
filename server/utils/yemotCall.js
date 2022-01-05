@@ -185,7 +185,8 @@ export class YemotCall extends CallBase {
     }
 
     async handleTeacherCall(teacher) {
-        this.existingReport = await queryHelper.getExistingTeacherReport(teacher.id);
+        this.report_date = moment().format('YYYY-MM-DD');
+        this.existingReport = await queryHelper.getExistingTeacherReport(teacher.id, this.report_date);
         // await this.askForEnterAndExitHour(teacher.name);
         await this.send(
             this.read({ type: 'text', text: format(this.texts.typeNumberOfLessons, teacher.name) },
@@ -219,7 +220,7 @@ export class YemotCall extends CallBase {
                 teacher_id: teacher.id,
                 enter_hour: this.params.enterHour,
                 exit_hour: this.params.exitHour,
-                report_date: new Date().toISOString().substr(0, 10),
+                report_date: this.report_date,
                 lessons_number: this.params.howManyLessons,
                 watching_students: this.params.watchingStudents,
                 teaching_students: this.params.teachingStudents,
