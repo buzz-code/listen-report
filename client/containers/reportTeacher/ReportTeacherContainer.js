@@ -15,6 +15,7 @@ const getColumns = ({ teachers }) => [
   { field: 'enter_hour', title: 'שעת כניסה' },
   { field: 'exit_hour', title: 'שעת יציאה' },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
+  { field: 'update_date', title: 'תאריך עדכון', type: 'date', editable: 'never' },
   { field: 'lessons_number', title: 'מספר שיעורים', type: 'numeric' },
   { field: 'watching_students', title: 'תלמידות צופות', type: 'numeric' },
   { field: 'teaching_students', title: 'תלמידות מוסרות', type: 'numeric' },

@@ -221,6 +221,7 @@ export class YemotCall extends CallBase {
                 enter_hour: this.params.enterHour,
                 exit_hour: this.params.exitHour,
                 report_date: this.report_date,
+                update_date: new Date(),
                 lessons_number: this.params.howManyLessons,
                 watching_students: this.params.watchingStudents,
                 teaching_students: this.params.teachingStudents,
