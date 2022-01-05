@@ -1,5 +1,6 @@
 import { CallBase } from "../../common-modules/server/utils/callBase";
 import format from 'string-format';
+import moment from "moment";
 import * as queryHelper from './queryHelper';
 import Report from "../models/report.model";
 import ReportTeacher from "../models/reportTeacher.model";
@@ -185,11 +186,43 @@ export class YemotCall extends CallBase {
     }
 
     async handleTeacherCall(teacher) {
-        this.report_date = moment().format('YYYY-MM-DD');
+        await this.send(
+            this.id_list_message({ type: 'text', text: format(this.texts.welcomeForTeacher, teacher.name) }),
+            this.read({ type: 'text', text: this.texts.chooseReportDateType },
+                'reportDateType', 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+
+        if (this.params.reportDateType === '1') {
+            this.report_date = moment().format('YYYY-MM-DD');
+        } else if (this.params.reportDateType === '2') {
+            await this.send(
+                this.read({ type: 'text', text: this.texts.chooseReportDate },
+                    'reportDate', 'tap', { max: 8, min: 8, block_asterisk: true })
+            );
+            this.report_date = moment(this.params.reportDate, 'DDMMYYYY').format('YYYY-MM-DD');
+        } else {
+            await this.send(
+                this.hangup()
+            );
+        }
+
+        const messages = [];
         this.existingReport = await queryHelper.getExistingTeacherReport(teacher.id, this.report_date);
+        if (existing_report) {
+            if (moment(this.report_date, 'YYYY-MM-DD').isBefore(moment().startOf('month'))) {
+                await this.send(
+                    this.id_list_message({ type: 'text', text: this.texts.cannotChangeReportOfPreviousMonth }),
+                    this.hangup()
+                );
+            } else {
+                messages.push(this.texts.existingReportWillBeDeleted);
+            }
+        }
+        
         // await this.askForEnterAndExitHour(teacher.name);
         await this.send(
-            this.read({ type: 'text', text: format(this.texts.typeNumberOfLessons, teacher.name) },
+            messages.length && this.id_list_message({ type: 'text', text: messages }),
+            this.read({ type: 'text', text: this.texts.typeNumberOfLessons },
                 'howManyLessons', 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         await this.send(
