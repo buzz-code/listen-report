@@ -208,7 +208,7 @@ export class YemotCall extends CallBase {
 
         const messages = [];
         this.existingReport = await queryHelper.getExistingTeacherReport(teacher.id, this.report_date);
-        if (existing_report) {
+        if (this.existingReport) {
             if (moment(this.report_date, 'YYYY-MM-DD').isBefore(moment().startOf('month'))) {
                 await this.send(
                     this.id_list_message({ type: 'text', text: this.texts.cannotChangeReportOfPreviousMonth }),
