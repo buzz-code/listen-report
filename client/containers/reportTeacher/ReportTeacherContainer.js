@@ -29,6 +29,8 @@ const getFilters = () => [
   { field: 'exit_hour', label: 'שעת יציאה', type: 'text', operator: 'like' },
   { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
   { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
+  { field: 'update_date', label: 'מתאריך עדכון', type: 'date', operator: 'date-before' },
+  { field: 'update_date', label: 'עד תאריך עדכון', type: 'date', operator: 'date-after' },
   { field: 'watching_students', label: 'תלמידות צופות', type: 'text', operator: 'like' },
   { field: 'teaching_students', label: 'תלמידות מוסרות', type: 'text', operator: 'like' },
   { field: 'training_teacher', label: 'מורה מנחה', type: 'text', operator: 'like' },

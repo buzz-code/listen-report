@@ -21,11 +21,13 @@ const getColumns = () => [
 
 const getFilters = () => [
   { field: 'teachers.name', label: 'שם מורה', type: 'text', operator: 'like' },
-  { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
-  { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
   { field: 'speciallity', label: 'התמחות', type: 'text', operator: 'like' },
   { field: 'training_teacher', label: 'מורה מנחה', type: 'text', operator: 'like' },
   { field: 'teacher_types.name', label: 'סוג מורה', type: 'text', operator: 'like' },
+  { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
+  { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
+  { field: 'update_date', label: 'מתאריך עדכון', type: 'date', operator: 'date-before' },
+  { field: 'update_date', label: 'עד תאריך עדכון', type: 'date', operator: 'date-after' },
 ];
 
 const TeacherSalaryReportContainer = ({ entity, title }) => {
