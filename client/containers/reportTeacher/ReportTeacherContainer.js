@@ -22,6 +22,7 @@ const getColumns = ({ teachers }) => [
   { field: 'was_telephone', title: 'דיון טלפוני', type: 'boolean' },
   { field: 'training_teacher', title: 'מורה מנחה', type: 'numeric' },
   { field: 'speciallity', title: 'התמחות', type: 'numeric' },
+  { field: 'extra_question', title: 'שאלה נוספת' },
 ];
 const getFilters = () => [
   { field: 'teachers.name', label: 'מורה', type: 'text', operator: 'like' },
@@ -35,6 +36,7 @@ const getFilters = () => [
   { field: 'teaching_students', label: 'תלמידות מוסרות', type: 'text', operator: 'like' },
   { field: 'training_teacher', label: 'מורה מנחה', type: 'text', operator: 'like' },
   { field: 'speciallity', label: 'התמחות', type: 'text', operator: 'like' },
+  { field: 'extra_question', label: 'שאלה נוספת', type: 'text', operator: 'like' },
 ];
 
 const ReportTeacherContainer = ({ entity, title }) => {

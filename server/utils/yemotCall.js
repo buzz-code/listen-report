@@ -186,8 +186,20 @@ export class YemotCall extends CallBase {
     }
 
     async handleTeacherCall(teacher) {
+        let welcome = format(this.texts.welcomeForTeacher, teacher.name);
+
+        if (this.texts.extraQuestion) {
+            await this.send(
+                welcome && this.id_list_message({ type: 'text', text: welcome }),
+                this.read({ type: 'text', text: this.texts.extraQuestion },
+                    'extraQuestion', 'tap', { max: 1, min: 1, block_asterisk: true })
+            );
+
+            welcome = null;
+        }
+
         await this.send(
-            this.id_list_message({ type: 'text', text: format(this.texts.welcomeForTeacher, teacher.name) }),
+            welcome && this.id_list_message({ type: 'text', text: welcome }),
             this.read({ type: 'text', text: this.texts.chooseReportDateType },
                 'reportDateType', 'tap', { max: 1, min: 1, block_asterisk: true })
         );
@@ -261,6 +273,7 @@ export class YemotCall extends CallBase {
                 was_telephone: this.params.wasTelephone == '1',
                 training_teacher: this.params.trainingTeacher,
                 speciallity: this.params.speciallity,
+                extra_question: this.params.extraQuestion,
             }).save();
 
             await this.notifySavedSuccessfully();
