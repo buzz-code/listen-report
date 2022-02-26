@@ -1,8 +1,10 @@
+import HttpStatus from 'http-status-codes';
 import ReportTeacher from '../models/reportTeacher.model';
 import Teacher from '../models/teacher.model';
 import { getListFromTable } from '../../common-modules/server/utils/common';
 import genericController, { applyFilters, fetchPage } from '../../common-modules/server/controllers/generic.controller';
 import bookshelf from '../../common-modules/server/config/bookshelf';
+import { updateSalaryMonthByUserId, updateSalaryCommentByUserId } from '../utils/queryHelper';
 
 export const { findById, store, update, destroy, uploadMultiple } = genericController(ReportTeacher);
 
@@ -61,6 +63,7 @@ export function getTeacherSalaryReport(req, res) {
                 teacher_type_name: 'teacher_types.name',
                 teacher_salary: bookshelf.knex.raw('(IF(lessons_number, lessons_number, 0) * watching_students * 10 + teaching_students * 55 + was_telephone * 60)')
             })
+            qb.select('salary_month', 'comment')
         });
     applyFilters(dbQuery, req.query.filters);
     fetchPage({ dbQuery }, req.query, res);
@@ -89,4 +92,38 @@ export function getTeacherSalarySummaryReport(req, res) {
         })
     });
     fetchPage({ dbQuery, countQuery }, req.query, res);
+}
+
+export async function updateSalaryMonth(req, res) {
+    const { body: { ids, salaryMonth } } = req;
+
+    try {
+        await updateSalaryMonthByUserId(req.currentUser.id, ids, salaryMonth);
+    } catch (e) {
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+            error: e.message,
+        });
+    }
+
+    res.json({
+        error: null,
+        data: { message: 'הנתונים נשמרו בהצלחה.' }
+    });
+}
+
+export async function updateSalaryComment(req, res) {
+    const { body: { id, comment } } = req;
+
+    try {
+        await updateSalaryCommentByUserId(req.currentUser.id, id, comment);
+    } catch (e) {
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+            error: e.message,
+        });
+    }
+
+    res.json({
+        error: null,
+        data: { message: 'הנתונים נשמרו בהצלחה.' }
+    });
 }

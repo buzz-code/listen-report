@@ -75,3 +75,16 @@ export async function getExistingKindergartenStudentReport(student_id) {
         return null;
     }
 }
+
+export function updateSalaryMonthByUserId(user_id, ids, salary_month) {
+    return new ReportTeacher().query()
+        .where({ user_id, salary_month: null })
+        .whereIn('id', ids)
+        .update({ salary_month });
+}
+
+export function updateSalaryCommentByUserId(user_id, id, comment) {
+    return new ReportTeacher().query()
+        .where({ user_id, id })
+        .update({ comment });
+}

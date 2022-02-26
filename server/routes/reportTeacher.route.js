@@ -22,6 +22,16 @@ const router = genericRoute(reportTeacherCtrl, router => {
         .post((req, res) => {
             exportPdf(req, res);
         });
+
+    router.route('/updateSalaryMonth')
+        .post((req, res) => {
+            reportTeacherCtrl.updateSalaryMonth(req, res);
+        });
+
+    router.route('/updateSalaryComment')
+        .post((req, res) => {
+            reportTeacherCtrl.updateSalaryComment(req, res);
+        });
 });
 
 
