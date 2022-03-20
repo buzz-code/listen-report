@@ -58,6 +58,12 @@ const ReportTeacherContainer = ({ entity, title }) => {
       dataToSave.report_date instanceof Date
         ? dataToSave.report_date.toISOString().substr(0, 10)
         : dataToSave.report_date.substr(0, 10),
+    update_date:
+      dataToSave.update_date instanceof Date
+        ? dataToSave.update_date.toISOString().substr(0, 10)
+        : dataToSave.update_date
+        ? dataToSave.update_date.substr(0, 10)
+        : undefined,
   });
 
   return (
