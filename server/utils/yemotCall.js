@@ -10,11 +10,6 @@ export class YemotCall extends CallBase {
     constructor(params, callId, user) {
         super(params, callId, user);
     }
-    
-    send(...args) {
-        console.log('yemot response', args);
-        super.send(...args);
-    }
 
     async start() {
         await this.getTexts();
