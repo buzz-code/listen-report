@@ -10,6 +10,11 @@ export class YemotCall extends CallBase {
     constructor(params, callId, user) {
         super(params, callId, user);
     }
+    
+    send(...args) {
+        console.log('yemot response', args);
+        super.send(...args);
+    }
 
     async start() {
         await this.getTexts();
@@ -230,7 +235,7 @@ export class YemotCall extends CallBase {
                 messages.push(this.texts.existingReportWillBeDeleted);
             }
         }
-        
+
         // await this.askForEnterAndExitHour(teacher.name);
         await this.send(
             messages.length && this.id_list_message({ type: 'text', text: messages }),
